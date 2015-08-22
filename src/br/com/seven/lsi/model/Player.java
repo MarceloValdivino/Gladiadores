@@ -7,17 +7,27 @@ package br.com.seven.lsi.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Marcelo
  */
+@Entity
 public class Player implements Serializable {
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
+    @OneToMany
     private List<Item> meusItens;
+    @OneToMany
     private List<Personagem> personagems;
+    @OneToMany
     private List<Habilidade> minhasHabilidades;
     private int gemas;
 

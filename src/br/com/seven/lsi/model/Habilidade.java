@@ -5,16 +5,25 @@
  */
 package br.com.seven.lsi.model;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Marcelo
  */
-public class Habilidade {
+@Entity
+public class Habilidade implements Serializable {
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private String nome;
     private Double dano;
+    @OneToMany
     private List<Personagem> personagens;
     private int valorCompra;
 

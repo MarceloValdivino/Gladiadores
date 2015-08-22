@@ -6,21 +6,32 @@
 package br.com.seven.lsi.model;
 
 import br.com.seven.lsi.myenum.TipoPersonagem;
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Marcelo
  */
-public class Personagem {
+@Entity
+public class Personagem implements Serializable {
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     private TipoPersonagem tipoPersonagem;
     private Double vida;
     private Double defesa;
     private Double ataque;
+    @OneToMany
     private List<Habilidade> habilidades;
+    @OneToMany
     private List<Item> itens;
 
     public Long getId() {

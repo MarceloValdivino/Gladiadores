@@ -15,9 +15,10 @@ import javax.persistence.Persistence;
  */
 public class JPAUtil {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("gladiadores_pu");
-    
-    public static EntityManager getEntityManager(){
+    private static final EntityManagerFactory emf = 
+            Persistence.createEntityManagerFactory("gladiadores_pu");
+
+    public static EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 }
