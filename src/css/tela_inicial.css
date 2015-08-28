@@ -1,0 +1,14 @@
+.players{
+    -fx-border-radius: 10;
+    -fx-border-color: skyblue;
+}
+
+.pane{
+    -fx-background-image: url("/imagens/background.jpg");
+}
+
+.botao{
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+}
+

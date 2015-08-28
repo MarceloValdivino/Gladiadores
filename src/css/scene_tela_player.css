@@ -1,0 +1,15 @@
+.pane{
+    -fx-border-radius: 10px;
+    -fx-border-color: teal;
+    -fx-background-color: transparent;
+}
+
+.paneCentral{
+     -fx-border-radius: 10;
+     -fx-background-image: url("/imagens/background_tela_player.jpg");
+}
+
+.label{
+    -fx-text-fill: white;
+}
+

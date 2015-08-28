@@ -1,0 +1,16 @@
+.botao{
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+}
+
+.pane{
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, skyblue 0%, silver 100%);
+}
+
+.players{
+    -fx-border-radius: 10;
+    -fx-border-color: skyblue;
+}
+
