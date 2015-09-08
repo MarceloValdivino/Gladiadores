@@ -81,7 +81,7 @@ public class TelaCadastroPlayer extends Application{
                p.setNome(campoNickName.getText());
                p.setGemas(0);
                p.setMeusItens(null);
-               p.setPersonagems(null);
+               p.setMeusPersonagens(null);
                facade.salvarPlayer(p);
                TelaCadastroPlayer.stage.close();
                List<Player> players = facade.listarPlayers();

@@ -8,6 +8,7 @@ package br.com.seven.lsi.control;
 
 import br.com.seven.lsi.model.Player;
 import br.com.seven.lsi.scenes.SceneTelaPlayer;
+import br.com.seven.lsi.singletone.PlayerOnline;
 import br.com.seven.lsi.view.SplashScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,6 +38,7 @@ public class BotaoListener {
 
             @Override
             public void handle(ActionEvent event) {
+                PlayerOnline.setPlayer(p);
                 SplashScene.getStage().setScene(new SceneTelaPlayer(new AnchorPane(), p));
             }
         });

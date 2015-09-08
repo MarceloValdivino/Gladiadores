@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="paneInventario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="mainPane" stylesheets="@../css/iventario.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.seven.lsi.view.TelaInventarioHerois">
+   <children>
+      <ListView fx:id="listMeusPersonagens" layoutX="14.0" layoutY="105.0" prefHeight="232.0" prefWidth="200.0" />
+      <Label layoutX="178.0" layoutY="14.0" text="Comprar Personagens" textFill="WHITE">
+         <font>
+            <Font name="Comic Sans MS Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="14.0" layoutY="61.0" prefHeight="35.0" prefWidth="200.0" text="Meus Personagens" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Comic Sans MS Bold" size="16.0" />
+         </font>
+      </Label>
+      <ListView fx:id="listLojaPersonagens" layoutX="386.0" layoutY="105.0" prefHeight="232.0" prefWidth="200.0" />
+      <Label alignment="CENTER" contentDisplay="TOP" layoutX="386.0" layoutY="61.0" prefHeight="35.0" prefWidth="200.0" text="Loja" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Comic Sans MS Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnComprar" layoutX="386.0" layoutY="349.0" mnemonicParsing="false" text="Comprar" />
+      <Button fx:id="btInfLoja" layoutX="504.0" layoutY="349.0" mnemonicParsing="false" text="Informações" />
+      <Button fx:id="btInfMeusPersonagens" layoutX="132.0" layoutY="349.0" mnemonicParsing="false" text="Informações" />
+      <Button fx:id="btnVender" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" text="Vender" />
+   </children>
+</AnchorPane>

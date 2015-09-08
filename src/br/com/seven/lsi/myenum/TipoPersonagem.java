@@ -11,18 +11,18 @@ package br.com.seven.lsi.myenum;
  */
 public enum TipoPersonagem {
     
-    ENTIDADE(1),
-    SUPER_HEROI(2),
-    HEROI(3),
-    VIGILANTE(4);
+    ENTIDADE("Entidade"),
+    SUPER_HEROI("Super Herói"),
+    HEROI("Herói"),
+    VIGILANTE("Vigilante");
     
-    private int tipo;
+    private String tipo;
     
-    private TipoPersonagem(int tipo){
+    private TipoPersonagem(String tipo){
         this.tipo = tipo;
     }
     
-    public int getTipoPersonagem(){
+    public String getTipoPersonagem(){
         return this.tipo;
     }
 }

@@ -29,8 +29,8 @@ public class GenericoDaoImp<T> implements IGenericoDao<T> {
     @Override
     public void save(T o) {
         EntityManager manager = JPAUtil.getEntityManager();
-        manager.getTransaction().begin();
         try {
+            manager.getTransaction().begin();
             manager.persist(o);
             manager.getTransaction().commit();
         } catch (Exception e) {
@@ -59,8 +59,8 @@ public class GenericoDaoImp<T> implements IGenericoDao<T> {
     @Override
     public void remove(T o) {
         EntityManager manager = JPAUtil.getEntityManager();
-        manager.getTransaction().begin();
         try {
+            manager.getTransaction().begin();
             manager.remove(o);
             o = null;
             manager.getTransaction().commit();
@@ -74,8 +74,8 @@ public class GenericoDaoImp<T> implements IGenericoDao<T> {
     @Override
     public void update(T o) {
         EntityManager manager = JPAUtil.getEntityManager();
-        manager.getTransaction().begin();
         try {
+            manager.getTransaction().begin();
             o = (T) manager.merge(o);
             manager.getTransaction().begin();
         } catch (Exception e) {
@@ -85,4 +85,14 @@ public class GenericoDaoImp<T> implements IGenericoDao<T> {
         }
     }
     
+    @Override
+    public Criteria getCriteria(){
+        EntityManager manager = JPAUtil.getEntityManager();
+        try{
+            return ((Session) manager.getDelegate()).createCriteria(clazz);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

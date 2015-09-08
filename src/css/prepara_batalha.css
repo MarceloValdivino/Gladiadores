@@ -1,0 +1,31 @@
+.mainPane {
+    -fx-background-image: url('../imagens/shield.jpg');
+    -fx-background-size: 800 600;
+}
+
+.playerOne{
+}
+
+.playerTow{
+    
+}
+
+.buttonBatalha {
+    -fx-background-color: #cccccc;
+    -fx-text-alignment: center;
+    -fx-border-radius: 0px;
+    -fx-font: 18px "Segoe UI Semibold";
+    -fx-text-fill: #333333;
+    -fx-background-radius: 0px;
+}
+
+.buttonBatalha:pressed {
+    -fx-background-color: #999999;
+    -fx-text-alignment: center;
+    -fx-background-radius: 0px;
+}
+
+.listHero {
+    -fx-background-radius: 10px;
+    -fx-opacity: 0.3;
+}

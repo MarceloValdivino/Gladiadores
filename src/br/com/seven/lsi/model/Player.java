@@ -6,7 +6,10 @@
 package br.com.seven.lsi.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,16 +23,30 @@ import javax.persistence.OneToMany;
 @Entity
 public class Player implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     @OneToMany
     private List<Item> meusItens;
-    @OneToMany
-    private List<Personagem> personagems;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<MeuPersonagem> meusPersonagens;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Habilidade> minhasHabilidades;
     private int gemas;
+    
+    public Player(){
+        meusItens = new ArrayList<>();
+        meusPersonagens = new ArrayList<>();
+        minhasHabilidades = new ArrayList<>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -47,14 +64,15 @@ public class Player implements Serializable {
         this.meusItens = meusItens;
     }
 
-    public List<Personagem> getPersonagems() {
-        return personagems;
+    @Basic
+    public List<MeuPersonagem> getMeusPersonagens() {
+        return meusPersonagens;
     }
 
-    public void setPersonagems(List<Personagem> personagems) {
-        this.personagems = personagems;
+    public void setMeusPersonagens(List<MeuPersonagem> meusPersonagens) {
+        this.meusPersonagens = meusPersonagens;
     }
-
+    
     public List<Habilidade> getMinhasHabilidades() {
         return minhasHabilidades;
     }
@@ -70,6 +88,5 @@ public class Player implements Serializable {
     public void setGemas(int gemas) {
         this.gemas = gemas;
     }
-    
     
 }

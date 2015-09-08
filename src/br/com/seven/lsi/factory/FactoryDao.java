@@ -8,9 +8,11 @@ package br.com.seven.lsi.factory;
 import br.com.seven.lsi.dao.HabilidadeDaoImp;
 import br.com.seven.lsi.dao.IHabilidadeDao;
 import br.com.seven.lsi.dao.IItemDao;
+import br.com.seven.lsi.dao.IMeuPersonagemDao;
 import br.com.seven.lsi.dao.IPersonagemDao;
 import br.com.seven.lsi.dao.IPlayerDao;
 import br.com.seven.lsi.dao.ItemDaoImp;
+import br.com.seven.lsi.dao.MeuPersobagemDao;
 import br.com.seven.lsi.dao.PersonagemDaoImp;
 import br.com.seven.lsi.dao.PlayerDaoImp;
 
@@ -34,5 +36,9 @@ public class FactoryDao {
     
     public static IPlayerDao getPlayerDao(){
         return new PlayerDaoImp();
+    }
+    
+    public static IMeuPersonagemDao getMeuPersonagemDao(){
+        return new MeuPersobagemDao();
     }
 }

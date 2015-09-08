@@ -20,13 +20,22 @@ import javax.persistence.OneToMany;
 @Entity
 public class Habilidade implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private Double dano;
     @OneToMany
     private List<Personagem> personagens;
     private int valorCompra;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public String getNome() {
         return nome;
     }

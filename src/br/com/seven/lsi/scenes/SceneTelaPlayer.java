@@ -2,8 +2,18 @@
 package br.com.seven.lsi.scenes;
 
 import br.com.seven.lsi.model.Player;
+import br.com.seven.lsi.singletone.PlayerOnline;
+import br.com.seven.lsi.view.TelaInventarioHerois;
+import br.com.seven.lsi.view.TelaPreapararBatalha;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +42,8 @@ public class SceneTelaPlayer extends Scene{
     private final Label lx2 = new Label("x");
     private final Label lx3 = new Label("x");
     private Label lPlayer;
+    private Button botaoIniciarBatalha;
+    private Button botaoInventarioHerois;
     
     private final Player player;
     
@@ -64,6 +76,12 @@ public class SceneTelaPlayer extends Scene{
         lGemas = new Label("0");
         lJoias = new Label("0");
         
+        botaoIniciarBatalha = new Button();
+        botaoIniciarBatalha.setText("Batalha");
+        
+        botaoInventarioHerois = new Button();
+        botaoInventarioHerois.setText("Inventário Heróis");
+        
         lMoedas.getStyleClass().add("label");
         lJoias.getStyleClass().add("label");
         lGemas.getStyleClass().add("label");
@@ -74,7 +92,7 @@ public class SceneTelaPlayer extends Scene{
         
         paneStatus.getChildren().addAll(gema,joias, moeda, lMoedas, lGemas, lJoias, lx1, lx2, lx3);
         paneFoto.getChildren().add(fotoPerfil);
-        pane.getChildren().addAll(paneItens, panePersonagens, paneBatalha, paneStatus, paneFoto, lPlayer);
+        pane.getChildren().addAll(paneItens, panePersonagens, paneBatalha, paneStatus, paneFoto, lPlayer, botaoIniciarBatalha, botaoInventarioHerois);
         
     }
     
@@ -108,6 +126,14 @@ public class SceneTelaPlayer extends Scene{
         paneStatus.setLayoutX(paneFoto.getLayoutX() + 200);
         paneStatus.setLayoutY(20);
         
+        botaoIniciarBatalha.setLayoutX(30);
+        botaoIniciarBatalha.setLayoutY(30);
+        botaoIniciarBatalha.setPrefSize(160, 20);
+        
+        botaoInventarioHerois.setLayoutX(30);
+        botaoInventarioHerois.setLayoutY(80);
+        botaoInventarioHerois.setPrefSize(160, 20);
+        
         gema.setLayoutX(10);
         gema.setLayoutY(10);
         joias.setLayoutX(10);
@@ -135,7 +161,45 @@ public class SceneTelaPlayer extends Scene{
     }
     
     private void initListeners(){
+        botaoIniciarBatalha.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    initStageInventarioHerois().show();
+                } catch (Exception ex) {
+                    System.err.println("Ocorre um erro ao tentar iniciar a tela de batalha.");
+                    Logger.getLogger(SceneTelaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         
+        botaoInventarioHerois.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try{
+                    initStageInventarioHerois().show();
+                } catch (Exception ex){
+                    System.err.println("Ocorreu um erro ao tentar iniciar a tela de inventário de heróis.");
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
+    public Stage initStageInventarioHerois(){
+        try {
+            Stage stageInventarioHerois = new Stage();
+            Parent parent = FXMLLoader.
+                    load(getClass().getResource("/layouts/inventario.fxml"));
+            Scene scene = new Scene(parent);
+            stageInventarioHerois.setScene(scene);
+            stageInventarioHerois.setTitle("Inventário/Loja");
+            stageInventarioHerois.setResizable(false);
+            return stageInventarioHerois;
+        } catch (IOException ex) {
+            Logger.getLogger(SceneTelaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

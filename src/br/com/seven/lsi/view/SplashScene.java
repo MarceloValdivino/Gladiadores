@@ -43,6 +43,7 @@ public class SplashScene extends Application{
         Scene scene = new Scene(pane);
         scene.getStylesheets().add("/css/splash_scene.css");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         SplashScene.stage = stage;
         initTransitions();
@@ -141,5 +142,6 @@ public class SplashScene extends Application{
     
     public static void main(String[] args){
         launch(args);
+        System.exit(0);
     }
 }

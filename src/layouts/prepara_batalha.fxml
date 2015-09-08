@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mainPane" stylesheets="@../css/prepara_batalha.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView id="playerOne" fitHeight="300.0" fitWidth="200.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" styleClass="playerOne" />
+      <ImageView id="playerTow" fitHeight="300.0" fitWidth="200.0" layoutX="550.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" styleClass="playerTow" />
+      <ListView id="listHeroOne" layoutX="51.0" layoutY="83.0" prefHeight="403.0" prefWidth="200.0" styleClass="listHero" />
+      <ListView id="listHeroTwo" layoutX="550.0" layoutY="83.0" prefHeight="403.0" prefWidth="200.0" styleClass="listHero" />
+      <Label layoutX="606.0" layoutY="40.0" text="Computer" textAlignment="CENTER" textFill="#cdc6c6">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="botaoBatalha" layoutX="343.0" layoutY="265.0" mnemonicParsing="false" styleClass="buttonBatalha" stylesheets="@../css/prepara_batalha.css" text="BATALHAR" textAlignment="CENTER">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="100.0" layoutY="40.0" text="Player One" textAlignment="CENTER" textFill="#cdc6c6">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

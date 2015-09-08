@@ -5,24 +5,15 @@
  */
 package br.com.seven.lsi.dao;
 
+import br.com.seven.lsi.model.MeuPersonagem;
+import br.com.seven.lsi.model.Player;
 import java.util.List;
-import org.hibernate.Criteria;
 
 /**
  *
  * @author Marcelo
  */
-public interface IGenericoDao<T> {
-
-    public void save(T o);
-
-    public T getObject(Long id);
-
-    public List<T> list();
-
-    public void remove(T o);
-
-    public void update(T o);
+public interface IMeuPersonagemDao extends IGenericoDao<MeuPersonagem>{
     
-    public Criteria getCriteria();
+    public List<MeuPersonagem> listPorPlayer(Player player);
 }

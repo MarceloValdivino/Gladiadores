@@ -13,3 +13,16 @@
     -fx-text-fill: white;
 }
 
+.button {
+    -fx-background-color: #ff0000;
+    -fx-text-alignment: center;
+    -fx-background-radius: 0px;
+    -fx-font: 18px "Segoe UI Semibold";
+    -fx-text-fill: #ffffff;
+}
+
+.button:pressed {
+    -fx-background-color: #990000;
+    -fx-text-alignment: center;
+    -fx-background-radius: 0px;
+}

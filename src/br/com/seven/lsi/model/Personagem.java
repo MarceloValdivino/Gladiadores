@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 /**
  *
@@ -22,13 +21,14 @@ import javax.persistence.Transient;
 @Entity
 public class Personagem implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private TipoPersonagem tipoPersonagem;
     private Double vida;
     private Double defesa;
     private Double ataque;
+    private Double valorVenda;
     @OneToMany
     private List<Habilidade> habilidades;
     @OneToMany
@@ -97,6 +97,12 @@ public class Personagem implements Serializable {
     public void setItens(List<Item> itens) {
         this.itens = itens;
     }
-            
-    
+
+    public Double getValorVenda() {
+        return valorVenda;
+    }
+
+    public void setValorVenda(Double valorVenda) {
+        this.valorVenda = valorVenda;
+    }    
 }

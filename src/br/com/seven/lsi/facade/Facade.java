@@ -7,11 +7,13 @@ package br.com.seven.lsi.facade;
 
 import br.com.seven.lsi.dao.IHabilidadeDao;
 import br.com.seven.lsi.dao.IItemDao;
+import br.com.seven.lsi.dao.IMeuPersonagemDao;
 import br.com.seven.lsi.dao.IPersonagemDao;
 import br.com.seven.lsi.dao.IPlayerDao;
 import br.com.seven.lsi.factory.FactoryDao;
 import br.com.seven.lsi.model.Habilidade;
 import br.com.seven.lsi.model.Item;
+import br.com.seven.lsi.model.MeuPersonagem;
 import br.com.seven.lsi.model.Personagem;
 import br.com.seven.lsi.model.Player;
 import java.util.List;
@@ -22,16 +24,18 @@ import java.util.List;
  */
 public class Facade {
 
-    IHabilidadeDao habilidadeDao;
-    IItemDao itemDao;
-    IPersonagemDao personagemDao;
-    IPlayerDao playerDao;
+    private IHabilidadeDao habilidadeDao;
+    private IItemDao itemDao;
+    private IPersonagemDao personagemDao;
+    private IPlayerDao playerDao;
+    private IMeuPersonagemDao meuPersonagemDao;
 
     public Facade() {
         this.habilidadeDao = FactoryDao.getHabilidadeDao();
         this.itemDao = FactoryDao.getItemDao();
         this.personagemDao = FactoryDao.getPersonagemDao();
         this.playerDao = FactoryDao.getPlayerDao();
+        this.meuPersonagemDao = FactoryDao.getMeuPersonagemDao();
     }
     
     public void salvarHabilidade(Habilidade habilidade){
@@ -94,7 +98,35 @@ public class Facade {
         playerDao.remove(player);
     }
     
+    public void atualizarPlayer(Player player){
+        playerDao.update(player);
+    }
+    
     public List<Player> listarPlayers(){
         return playerDao.list();
+    }
+    
+    public void salvarMeuPersonagem(MeuPersonagem meuPersonagem){
+        meuPersonagemDao.save(meuPersonagem);
+    }
+    
+    public MeuPersonagem buscarMeuPersonagem(Long id){
+        return meuPersonagemDao.getObject(id);
+    }
+    
+    public void removerMeuPersonagem(MeuPersonagem meuPersonagem){
+        meuPersonagemDao.remove(meuPersonagem);
+    }
+    
+    public void atualizarMeuPersonagem(MeuPersonagem meuPersonagem){
+        meuPersonagemDao.update(meuPersonagem);
+    }
+    
+    public List<MeuPersonagem> listarMeuPersonagem(){
+        return meuPersonagemDao.list();
+    }
+    
+    public List<MeuPersonagem> listarMeuPersonagemPorPlayer(Player player){
+        return meuPersonagemDao.listPorPlayer(player);
     }
 }
