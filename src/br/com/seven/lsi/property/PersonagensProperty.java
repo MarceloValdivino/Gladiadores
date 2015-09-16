@@ -5,6 +5,7 @@
  */
 package br.com.seven.lsi.property;
 
+import java.util.Objects;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -41,6 +42,26 @@ public class PersonagensProperty {
     public String toString() {
         return getNomePersonagem().getValue();
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PersonagensProperty other = (PersonagensProperty) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -16,4 +16,6 @@ import java.util.List;
 public interface IMeuPersonagemDao extends IGenericoDao<MeuPersonagem>{
     
     public List<MeuPersonagem> listPorPlayer(Player player);
+    
+    public MeuPersonagem buscarPorPlayerEPersonagem(Long idPlayer,Long idPersonagem);
 }

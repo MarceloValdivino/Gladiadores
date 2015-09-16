@@ -7,6 +7,7 @@ package br.com.seven.lsi.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +21,9 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class MeuPersonagem implements Serializable {
-    
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     private Personagem personagem;
@@ -29,9 +31,9 @@ public class MeuPersonagem implements Serializable {
     private Player player;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Calendar dataCompra;
-    
-    public MeuPersonagem(){
-        personagem = new Personagem();
+    private boolean status;
+
+    public MeuPersonagem() {
         dataCompra = Calendar.getInstance();
     }
 
@@ -41,14 +43,6 @@ public class MeuPersonagem implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Personagem getPersonagemm() {
-        return personagem;
-    }
-
-    public void setPersonagemgem(Personagem personagem) {
-        this.personagem = personagem;
     }
 
     public Player getPlayer() {
@@ -74,7 +68,35 @@ public class MeuPersonagem implements Serializable {
     public Personagem getPersonagem() {
         return personagem;
     }
-    
-    
-    
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MeuPersonagem other = (MeuPersonagem) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
 }

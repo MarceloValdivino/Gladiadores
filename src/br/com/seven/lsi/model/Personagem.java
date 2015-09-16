@@ -28,7 +28,7 @@ public class Personagem implements Serializable {
     private Double vida;
     private Double defesa;
     private Double ataque;
-    private Double valorVenda;
+    private int valorVenda;
     @OneToMany
     private List<Habilidade> habilidades;
     @OneToMany
@@ -98,11 +98,11 @@ public class Personagem implements Serializable {
         this.itens = itens;
     }
 
-    public Double getValorVenda() {
+    public int getValorVenda() {
         return valorVenda;
     }
 
-    public void setValorVenda(Double valorVenda) {
+    public void setValorVenda(int valorVenda) {
         this.valorVenda = valorVenda;
-    }    
+    }
 }

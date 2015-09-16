@@ -86,6 +86,10 @@ public class Facade {
         return personagemDao.list();
     }
     
+    public List<Personagem> listarPersonagensPlayerNaoTem(Player player){
+        return personagemDao.listarPersonagensPlayerNaoTem(player.getId());
+    }
+    
     public void salvarPlayer(Player player){
         playerDao.save(player);
     }
@@ -128,5 +132,9 @@ public class Facade {
     
     public List<MeuPersonagem> listarMeuPersonagemPorPlayer(Player player){
         return meuPersonagemDao.listPorPlayer(player);
+    }
+    
+    public MeuPersonagem buscarMeuPersonagemPorPlayerEPersonagem(Player player, Personagem personagem){
+        return meuPersonagemDao.buscarPorPlayerEPersonagem(player.getId(), personagem.getId());
     }
 }

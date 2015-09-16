@@ -12,7 +12,7 @@ import br.com.seven.lsi.dao.IMeuPersonagemDao;
 import br.com.seven.lsi.dao.IPersonagemDao;
 import br.com.seven.lsi.dao.IPlayerDao;
 import br.com.seven.lsi.dao.ItemDaoImp;
-import br.com.seven.lsi.dao.MeuPersobagemDao;
+import br.com.seven.lsi.dao.MeuPersobagemDaoImp;
 import br.com.seven.lsi.dao.PersonagemDaoImp;
 import br.com.seven.lsi.dao.PlayerDaoImp;
 
@@ -39,6 +39,6 @@ public class FactoryDao {
     }
     
     public static IMeuPersonagemDao getMeuPersonagemDao(){
-        return new MeuPersobagemDao();
+        return new MeuPersobagemDaoImp();
     }
 }

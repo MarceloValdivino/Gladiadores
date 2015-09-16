@@ -6,11 +6,14 @@
 package br.com.seven.lsi.dao;
 
 import br.com.seven.lsi.model.Personagem;
+import java.util.List;
 
 /**
  *
  * @author Marcelo
  */
 public interface IPersonagemDao extends IGenericoDao<Personagem>{
+    
+    public List<Personagem> listarPersonagensPlayerNaoTem(Long idPlayer);
     
 }

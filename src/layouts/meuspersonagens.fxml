@@ -5,16 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="paneInventario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="345.0" styleClass="mainPane" stylesheets="@../css/iventario.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.seven.lsi.view.TelaInventarioHerois">
+<AnchorPane fx:id="paneInventario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="345.0" styleClass="mainPane" stylesheets="@../css/iventario.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.seven.lsi.view.TelaMeusPersonagens">
    <children>
-      <Label layoutX="48.0" layoutY="21.0" text="Comprar Personagens" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="98.0" layoutY="21.0" text="Meus Heróis" textFill="WHITE">
          <font>
             <Font name="Comic Sans MS Bold" size="24.0" />
          </font>
       </Label>
-      <ListView fx:id="listLojaPersonagens" layoutX="29.0" layoutY="91.0" prefHeight="232.0" prefWidth="281.0" />
-      <Button fx:id="btnComprar" layoutX="48.0" layoutY="349.0" mnemonicParsing="false" text="Comprar" />
-      <Button fx:id="btInfLoja" layoutX="211.0" layoutY="349.0" mnemonicParsing="false" text="Informações" />
+      <ListView fx:id="listMeusPersonagens" layoutX="29.0" layoutY="91.0" prefHeight="232.0" prefWidth="281.0" />
+      <Button fx:id="btnVender" layoutX="48.0" layoutY="349.0" mnemonicParsing="false" onAction="#venderHeroi" text="Vender" />
+      <Button fx:id="btInfLoja" layoutX="211.0" layoutY="349.0" mnemonicParsing="false" onAction="#informacoesHeroi" text="Informações" />
       <Label alignment="CENTER_RIGHT" contentDisplay="TOP" layoutX="119.0" layoutY="56.0" prefHeight="35.0" prefWidth="107.0" text="Gemas:" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Comic Sans MS Bold" size="16.0" />

@@ -13,7 +13,6 @@ import br.com.seven.lsi.property.PersonagensProperty;
 import br.com.seven.lsi.singletone.PlayerOnline;
 import br.com.seven.lsi.util.AlertUtil;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Application;
@@ -30,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -41,34 +41,35 @@ import javafx.stage.Stage;
 public class TelaInventarioHerois extends Application implements Initializable {
 
     @FXML
+    private Button btInfLoja;
+
+    @FXML
     private AnchorPane paneInventario;
-    @FXML
-    private ListView<PersonagensProperty> listMeusPersonagens;
-    @FXML
-    private ListView<PersonagensProperty> listLojaPersonagens;
+
     @FXML
     private Button btnComprar;
+
     @FXML
-    private Button btnVender;
+    private ListView<PersonagensProperty> listLojaPersonagens;
+
     @FXML
-    private Button btInfMeusPersonagens;
-    @FXML
-    private Button btInfLoja;
+    private Label lbMoedas;
+
     private Player player;
     private Facade facade;
     private List<Personagem> listaPersonagens;
     private ObservableList<PersonagensProperty> observableListPersLoja;
-    private ObservableList<PersonagensProperty> observableListPersPlayer;
     private Long idSelecionado;
     private Personagem personagem;
 
     public TelaInventarioHerois() {
         this.facade = new Facade();
-        listaPersonagens = this.facade.listarPersonagem();
         player = PlayerOnline.getPlayer();
+        listaPersonagens = this.facade.listarPersonagensPlayerNaoTem(player);
+        System.out.println("Quantidade de personagens que player nao tem: "+listaPersonagens.size());
         System.out.println("Contrutor - TelaInventarioHerois");
-        System.out.println("Player Personagem: "+player.getMeusPersonagens());
-        System.out.println("Player Personagem: "+facade.listarMeuPersonagemPorPlayer(player));
+        System.out.println("Player Personagem: " + player.getMeusPersonagens());
+        System.out.println("Player Personagem: " + facade.listarMeuPersonagemPorPlayer(player));
     }
 
     @Override
@@ -85,26 +86,46 @@ public class TelaInventarioHerois extends Application implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        player = facade.buscarPlayer(player.getId());
         System.out.println("Chemei o initializate - TelaInventarioHerois");
+        lbMoedas.setText(String.valueOf(player.getGemas()));
         btnComprar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 personagem = facade.buscarPersonagem(idSelecionado);
-                boolean choice = AlertUtil.confirmationAlert("Confirmar Compra", "Deseja mesmo comprar esse Personagem?\n" + personagem.getNome(), "Ataque: " + personagem.getAtaque() + "\nDefesa: " + personagem.getDefesa());
+                boolean choice = AlertUtil.confirmationAlert("Confirmar Compra", "Deseja mesmo comprar esse Personagem?\n" + personagem.getNome(), "Ataque: " + personagem.getAtaque()
+                        + "\nDefesa: " + personagem.getDefesa()
+                        + "\nValor para compra: " + personagem.getValorVenda());
                 if (choice) {
-                    MeuPersonagem meuPersonagem = new MeuPersonagem();
-                    meuPersonagem.setPersonagem(personagem);
-                    meuPersonagem.setPlayer(player);
-                    player.getMeusPersonagens().add(meuPersonagem);
-                    facade.salvarMeuPersonagem(meuPersonagem);
-                    facade.atualizarPlayer(player);
-                    AlertUtil.genericAlert("Comprar Realizada", 
-                            "Compra de Personagem", 
-                            "Você acabou de adquirir o personagem " + personagem.getNome() + ".\nAtaque: " + personagem.getAtaque() + "\nDefesa: " + personagem.getDefesa(), 
-                            Alert.AlertType.INFORMATION);
-                    observableListPersPlayer.add(new PersonagensProperty(personagem.getId(), personagem.getNome()));
-                    listMeusPersonagens.setItems(observableListPersPlayer);
+                    if (player.getGemas() >= personagem.getValorVenda()) {
+                        player.setGemas((int) (player.getGemas() - personagem.getValorVenda()));
+                        System.out.println("Gemas: " + player.getGemas());
+                        MeuPersonagem meuPersonagem = new MeuPersonagem();
+                        meuPersonagem.setPersonagem(personagem);
+                        meuPersonagem.setStatus(true);
+                        meuPersonagem.setPlayer(player);
+                        player.getMeusPersonagens().add(meuPersonagem);
+                        facade.salvarMeuPersonagem(meuPersonagem);
+                        facade.atualizarPlayer(player);
+                        PersonagensProperty pp = new PersonagensProperty(meuPersonagem.getPersonagem().getId(), meuPersonagem.getPersonagem().getNome());
+                        observableListPersLoja.remove(pp);
+                        listLojaPersonagens.setItems(observableListPersLoja);
+                        lbMoedas.setText(String.valueOf(player.getGemas()));
+                        AlertUtil.genericAlert("Comprar Realizada",
+                                "Compra de Personagem",
+                                "Você acabou de adquirir o personagem " + personagem.getNome() + ".\nAtaque: " + personagem.getAtaque() + "\nDefesa: " + personagem.getDefesa(),
+                                Alert.AlertType.INFORMATION);
+                    } else {
+                        AlertUtil.genericAlert("Compra", "Não foi possível comprar esse personagem.", "Valor do personagem: " + personagem.getValorVenda() + "\nSuas moedas: " + player.getGemas(), Alert.AlertType.WARNING);
+                    }
                 }
+            }
+        });
+
+        listLojaPersonagens.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PersonagensProperty>() {
+            @Override
+            public void changed(ObservableValue<? extends PersonagensProperty> observable, PersonagensProperty oldValue, PersonagensProperty newValue) {
+                idSelecionado = newValue.getId();
             }
         });
 
@@ -112,14 +133,10 @@ public class TelaInventarioHerois extends Application implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 personagem = facade.buscarPersonagem(idSelecionado);
-                AlertUtil.genericAlert(personagem.getTipoPersonagem().getTipoPersonagem(), personagem.getNome(), "Ataque: " + personagem.getAtaque() + "\nDefesa: " + personagem.getDefesa(), Alert.AlertType.INFORMATION);
-            }
-        });
-        btInfMeusPersonagens.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                personagem = facade.buscarPersonagem(idSelecionado);
-                AlertUtil.genericAlert(personagem.getTipoPersonagem().getTipoPersonagem(), personagem.getNome(), "Ataque: " + personagem.getAtaque() + "\nDefesa: " + personagem.getDefesa(), Alert.AlertType.INFORMATION);
+                AlertUtil.genericAlert(personagem.getTipoPersonagem().getTipoPersonagem(), personagem.getNome(), "Ataque: " + personagem.getAtaque()
+                        + "\nDefesa: " + personagem.getDefesa()
+                        + "\nValor para compra: " + personagem.getValorVenda(),
+                        Alert.AlertType.INFORMATION);
             }
         });
 
@@ -127,29 +144,7 @@ public class TelaInventarioHerois extends Application implements Initializable {
         for (Personagem p : listaPersonagens) {
             observableListPersLoja.add(new PersonagensProperty(p.getId(), p.getNome()));
         }
-
         listLojaPersonagens.setItems(observableListPersLoja);
-        listLojaPersonagens.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PersonagensProperty>() {
-            @Override
-            public void changed(ObservableValue<? extends PersonagensProperty> observable, PersonagensProperty oldValue, PersonagensProperty newValue) {
-                idSelecionado = newValue.getId();
-            }
-        });
-        
-        observableListPersPlayer = FXCollections.observableArrayList();
-        
-        for(MeuPersonagem mp : facade.listarMeuPersonagemPorPlayer(player)){
-            listaPersonagens.add(mp.getPersonagem());
-            observableListPersPlayer.add(new PersonagensProperty(mp.getPersonagemm().getId(), mp.getPersonagem().getNome()));
-        }
-        
-        listMeusPersonagens.setItems(observableListPersPlayer);
-        listMeusPersonagens.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PersonagensProperty>() {
-            @Override
-            public void changed(ObservableValue<? extends PersonagensProperty> observable, PersonagensProperty oldValue, PersonagensProperty newValue) {
-                idSelecionado = newValue.getId();
-            }
-        });
     }
 
     public Player getPlayer() {

@@ -79,7 +79,6 @@ public class TelaCadastroPlayer extends Application{
             public void handle(ActionEvent event) {
                Player p = new Player();
                p.setNome(campoNickName.getText());
-               p.setGemas(0);
                p.setMeusItens(null);
                p.setMeusPersonagens(null);
                facade.salvarPlayer(p);

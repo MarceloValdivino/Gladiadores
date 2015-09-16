@@ -6,6 +6,7 @@
 package br.com.seven.lsi.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,10 @@ public class Habilidade implements Serializable {
     @OneToMany
     private List<Personagem> personagens;
     private int valorCompra;
+    
+    public Habilidade(){
+        personagens = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;

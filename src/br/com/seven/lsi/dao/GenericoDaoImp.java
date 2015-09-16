@@ -62,7 +62,6 @@ public class GenericoDaoImp<T> implements IGenericoDao<T> {
         try {
             manager.getTransaction().begin();
             manager.remove(o);
-            o = null;
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
@@ -76,8 +75,8 @@ public class GenericoDaoImp<T> implements IGenericoDao<T> {
         EntityManager manager = JPAUtil.getEntityManager();
         try {
             manager.getTransaction().begin();
-            o = (T) manager.merge(o);
-            manager.getTransaction().begin();
+            manager.merge(o);
+            manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
         } finally {
