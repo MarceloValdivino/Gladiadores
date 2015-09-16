@@ -31,6 +31,7 @@ public class MeuPersonagem implements Serializable {
     private Calendar dataCompra;
     
     public MeuPersonagem(){
+        personagem = new Personagem();
         dataCompra = Calendar.getInstance();
     }
 

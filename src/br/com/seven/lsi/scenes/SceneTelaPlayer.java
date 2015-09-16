@@ -1,13 +1,23 @@
 
 package br.com.seven.lsi.scenes;
 
+import br.com.seven.lsi.model.Habilidade;
+import br.com.seven.lsi.model.Item;
+import br.com.seven.lsi.model.MeuPersonagem;
+import br.com.seven.lsi.model.Personagem;
 import br.com.seven.lsi.model.Player;
+import br.com.seven.lsi.property.HabilidadesProperty;
+import br.com.seven.lsi.property.ItemProperty;
+import br.com.seven.lsi.property.PersonagensProperty;
 import br.com.seven.lsi.singletone.PlayerOnline;
 import br.com.seven.lsi.view.TelaInventarioHerois;
 import br.com.seven.lsi.view.TelaPreapararBatalha;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -31,9 +42,21 @@ public class SceneTelaPlayer extends Scene{
     private ImageView fotoPerfil;
     private AnchorPane paneItens;
     private AnchorPane panePersonagens;
-    private AnchorPane paneBatalha;
+    private AnchorPane paneHabilidades;
     private AnchorPane paneStatus;
     private AnchorPane paneFoto;
+    private ListView<ItemProperty> listaDeItens;
+    private ObservableList<ItemProperty> obsListItens;
+    private List<Item> itensPlayer;
+    
+    private ListView<PersonagensProperty> listaDePersonagem;
+    private ObservableList<PersonagensProperty> obsListPers;
+    private List<MeuPersonagem> personaPlayer;
+    
+    private ListView<HabilidadesProperty> listaDeHabilidades;
+    private ObservableList<HabilidadesProperty> obsListHabil;
+    private List<Habilidade> habilPlayer;
+    
     private ImageView joias;
     private ImageView gema;
     private ImageView moeda;
@@ -60,7 +83,7 @@ public class SceneTelaPlayer extends Scene{
     private void initComponentes(){
         paneItens = new AnchorPane();
         panePersonagens = new AnchorPane();
-        paneBatalha = new AnchorPane();
+        paneHabilidades = new AnchorPane();
         paneStatus = new AnchorPane();
         paneFoto = new AnchorPane();
         
@@ -82,6 +105,34 @@ public class SceneTelaPlayer extends Scene{
         botaoInventarioHerois = new Button();
         botaoInventarioHerois.setText("Inventário Heróis");
         
+        itensPlayer = player.getMeusItens();
+        obsListItens = FXCollections.observableArrayList();
+        for(Item i : itensPlayer){
+            obsListItens.add(new ItemProperty(i.getId(), i.getNome()));
+        }
+        listaDeItens = new ListView<>();
+        listaDeItens.setItems(obsListItens);
+        
+        
+        personaPlayer = player.getMeusPersonagens();
+        obsListPers = FXCollections.observableArrayList();
+        for(MeuPersonagem p: personaPlayer){
+            obsListPers.add(new PersonagensProperty(p.getId(), p.getPersonagem().getNome()));
+        }
+        listaDePersonagem = new ListView<>();
+        listaDePersonagem.setItems(obsListPers);
+        
+        
+        habilPlayer = player.getMinhasHabilidades();
+        obsListHabil = FXCollections.observableArrayList();
+        for(Habilidade h: habilPlayer){
+            obsListHabil.add(new HabilidadesProperty(h.getId(),h.getNome()));
+        }
+        listaDeHabilidades = new ListView<>();
+        listaDeHabilidades.setItems(obsListHabil);
+        
+        
+        
         lMoedas.getStyleClass().add("label");
         lJoias.getStyleClass().add("label");
         lGemas.getStyleClass().add("label");
@@ -92,7 +143,7 @@ public class SceneTelaPlayer extends Scene{
         
         paneStatus.getChildren().addAll(gema,joias, moeda, lMoedas, lGemas, lJoias, lx1, lx2, lx3);
         paneFoto.getChildren().add(fotoPerfil);
-        pane.getChildren().addAll(paneItens, panePersonagens, paneBatalha, paneStatus, paneFoto, lPlayer, botaoIniciarBatalha, botaoInventarioHerois);
+        pane.getChildren().addAll(paneItens, panePersonagens, paneHabilidades, paneStatus, paneFoto, lPlayer, botaoIniciarBatalha, botaoInventarioHerois);
         
     }
     
@@ -100,12 +151,21 @@ public class SceneTelaPlayer extends Scene{
         pane.setPrefSize(800, 600);
         pane.getStyleClass().add("paneCentral");
         
-        paneItens.setPrefSize(180, 440);
+        paneItens.setPrefSize(170, 440);
         paneItens.getStyleClass().add("pane");
+        listaDeItens.setPrefSize(180, 420);
+        paneItens.getChildren().addAll(listaDeItens);
+       
         panePersonagens.setPrefSize(340, 440);
         panePersonagens.getStyleClass().add("pane");
-        paneBatalha.setPrefSize(200, 560);
-        paneBatalha.getStyleClass().add("pane");
+        listaDePersonagem.setPrefSize(350, 420);
+        panePersonagens.getChildren().addAll(listaDePersonagem);
+        
+        paneHabilidades.setPrefSize(200, 560);
+        paneHabilidades.getStyleClass().add("pane");
+        listaDeHabilidades.setPrefSize(210, 540);
+        paneHabilidades.getChildren().addAll(listaDeHabilidades);
+        
         paneStatus.setPrefSize(340, 100);
         paneStatus.getStyleClass().add("pane");
         paneFoto.setPrefSize(180, 100);
@@ -114,14 +174,20 @@ public class SceneTelaPlayer extends Scene{
         paneFoto.setLayoutX(20);
         paneFoto.setLayoutY(20);
         
+        listaDeItens.setLayoutX(10);
+        listaDeItens.setLayoutY(10);       
         paneItens.setLayoutX(paneFoto.getLayoutX());
         paneItens.setLayoutY(paneFoto.getLayoutY() + 120);
         
+        listaDePersonagem.setLayoutX(10);
+        listaDePersonagem.setLayoutY(10);
         panePersonagens.setLayoutX(paneItens.getLayoutX() + 200);
         panePersonagens.setLayoutY(140);
-        
-        paneBatalha.setLayoutX(panePersonagens.getLayoutX()+360);
-        paneBatalha.setLayoutY(20);
+                            
+        listaDeHabilidades.setLayoutX(10);
+        listaDeHabilidades.setLayoutY(10);
+        paneHabilidades.setLayoutX(panePersonagens.getLayoutX()+360);
+        paneHabilidades.setLayoutY(20);
         
         paneStatus.setLayoutX(paneFoto.getLayoutX() + 200);
         paneStatus.setLayoutY(20);
