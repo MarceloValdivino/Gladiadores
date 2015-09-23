@@ -1,4 +1,3 @@
-
 package br.com.seven.lsi.view;
 
 import br.com.seven.lsi.control.BotaoListener;
@@ -24,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Girlian
  */
-public class TelaCadastroPlayer extends Application{
+public class TelaCadastroPlayer extends Application {
 
     private Player p;
     private final Facade facade;
@@ -35,9 +34,9 @@ public class TelaCadastroPlayer extends Application{
     private Button btnSalvar;
     private Button btnCancelar;
     private BotaoListener botaoListener;
-    
-    public TelaCadastroPlayer(){
-        facade= new Facade();
+
+    public TelaCadastroPlayer() {
+        facade = new Facade();
     }
 
     @Override
@@ -53,12 +52,12 @@ public class TelaCadastroPlayer extends Application{
         stage.show();
         TelaCadastroPlayer.stage = stage;
     }
-    
-    public static Stage getStage(){
+
+    public static Stage getStage() {
         return TelaCadastroPlayer.stage;
     }
-    
-    private void initComponentes(){
+
+    private void initComponentes() {
         botaoListener = BotaoListener.getInstance();
         pane = new AnchorPane();
         pane.getStyleClass().add("pane");
@@ -71,31 +70,31 @@ public class TelaCadastroPlayer extends Application{
         btnCancelar.getStyleClass().add("botao");
         pane.getChildren().addAll(lNickName, campoNickName, btnSalvar, btnCancelar);
     }
-    
-    private void initListeners(){
-        btnSalvar.setOnAction(new EventHandler<ActionEvent>(){
+
+    private void initListeners() {
+        btnSalvar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-               Player p = new Player();
-               p.setNome(campoNickName.getText());
-               p.setMeusItens(null);
-               p.setMeusPersonagens(null);
-               facade.salvarPlayer(p);
-               TelaCadastroPlayer.stage.close();
-               List<Player> players = facade.listarPlayers();
+                Player p = new Player();
+                p.setNome(campoNickName.getText());
+                facade.salvarPlayer(p);
+                TelaCadastroPlayer.stage.close();
+                List<Player> players = facade.listarPlayers();
                 ObservableList botoes = FXCollections.observableArrayList();
-               for(Player player: players){
-                   Button b = new Button(player.getNome());
-                   b.getStyleClass().add("botao");
-                   botaoListener.setBotaoPlayersEvent(b, p);
-                   botoes.add(b);
-               }
-               //TEM  QUE MUDAR O ESTILO DOS BOTOES
-               SceneTelaInicial.getListView().setItems(botoes);
+                for (Player player : players) {
+                    if (player.isStatus()) {
+                        Button b = new Button(player.getNome());
+                        b.getStyleClass().add("botao");
+                        botaoListener.setBotaoPlayersEvent(b, p);
+                        botoes.add(b);
+                    }
+                }
+                //TEM  QUE MUDAR O ESTILO DOS BOTOES
+                SceneTelaInicial.getListView().setItems(botoes);
             }
         });
-        
+
         btnCancelar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -104,27 +103,27 @@ public class TelaCadastroPlayer extends Application{
                 TelaCadastroPlayer.stage.close();
             }
         });
-        
+
     }
-    
-    private void initLayout(){
+
+    private void initLayout() {
         pane.setPrefSize(320, 180);
-        
-        lNickName.setLayoutX(pane.getPrefWidth()/2 - 30);
+
+        lNickName.setLayoutX(pane.getPrefWidth() / 2 - 30);
         lNickName.setLayoutY(20);
-        
-        campoNickName.setLayoutX(pane.getPrefWidth()/2 - 80);
+
+        campoNickName.setLayoutX(pane.getPrefWidth() / 2 - 80);
         campoNickName.setLayoutY(45);
-        
-        btnSalvar.setLayoutX((pane.getPrefWidth()/2) - 30);
+
+        btnSalvar.setLayoutX((pane.getPrefWidth() / 2) - 30);
         btnSalvar.setLayoutY(80);
-        
-        btnCancelar.setLayoutX(pane.getPrefWidth()/2 - 37);
+
+        btnCancelar.setLayoutX(pane.getPrefWidth() / 2 - 37);
         btnCancelar.setLayoutY(110);
     }
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

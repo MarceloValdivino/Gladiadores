@@ -11,6 +11,7 @@ import br.com.seven.lsi.property.ItemProperty;
 import br.com.seven.lsi.property.PersonagensProperty;
 import br.com.seven.lsi.singletone.PlayerOnline;
 import br.com.seven.lsi.view.TelaInventarioHerois;
+import br.com.seven.lsi.view.TelaMinhaConta;
 import br.com.seven.lsi.view.TelaPreapararBatalha;
 import java.io.IOException;
 import java.util.List;
@@ -67,6 +68,7 @@ public class SceneTelaPlayer extends Scene {
     private Label lPlayer;
     private Button botaoLojaDeHerois;
     private Button botaoMeuHerois;
+    private Button botaoMinhaConta;
 
     private final Player player;
     
@@ -108,6 +110,9 @@ public class SceneTelaPlayer extends Scene {
 
         botaoMeuHerois = new Button();
         botaoMeuHerois.setText("Meus Heróis");
+        
+        botaoMinhaConta = new Button();
+        botaoMinhaConta.setText("Minha Conta");
 
         itensPlayer = player.getMeusItens();
         obsListItens = FXCollections.observableArrayList();
@@ -143,7 +148,8 @@ public class SceneTelaPlayer extends Scene {
 
         paneStatus.getChildren().addAll(gema, joias, moeda, lMoedas, lGemas, lJoias, lx1, lx2, lx3);
         paneFoto.getChildren().add(fotoPerfil);
-        pane.getChildren().addAll(paneItens, panePersonagens, paneHabilidades, paneStatus, paneFoto, lPlayer, botaoLojaDeHerois, botaoMeuHerois);
+        pane.getChildren().addAll(paneItens, panePersonagens, paneHabilidades, paneStatus, paneFoto, 
+                lPlayer, botaoLojaDeHerois, botaoMeuHerois, botaoMinhaConta);
 
     }
 
@@ -199,6 +205,9 @@ public class SceneTelaPlayer extends Scene {
         botaoMeuHerois.setLayoutX(30);
         botaoMeuHerois.setLayoutY(30);
         botaoMeuHerois.setPrefSize(160, 20);
+        
+        botaoMinhaConta.setLayoutX(30);
+        botaoMinhaConta.setLayoutY(130);
 
         gema.setLayoutX(10);
         gema.setLayoutY(10);
@@ -246,6 +255,18 @@ public class SceneTelaPlayer extends Scene {
                     initStageMeusHerois().show();
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                }
+            }
+        });
+        
+        botaoMinhaConta.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    new TelaMinhaConta(null, player).start(new Stage());
+                } catch (Exception ex) {
+                    System.out.println("erro ao abrir minha conta");
                 }
             }
         });

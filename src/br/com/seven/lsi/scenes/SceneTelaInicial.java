@@ -1,4 +1,3 @@
-
 package br.com.seven.lsi.scenes;
 
 import br.com.seven.lsi.control.BotaoListener;
@@ -24,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Girlian
  */
-public class SceneTelaInicial extends Scene{
+public class SceneTelaInicial extends Scene {
 
     private final AnchorPane pane;
     private static ListView<Button> players;
@@ -33,7 +32,7 @@ public class SceneTelaInicial extends Scene{
     private Facade facade;
     private ImageView icone;
     private BotaoListener botaoListener;
-    
+
     public SceneTelaInicial(Parent root) {
         super(root);
         this.getStylesheets().add("/css/tela_inicial.css");
@@ -42,8 +41,8 @@ public class SceneTelaInicial extends Scene{
         initLayout();
         initListeners();
     }
-    
-    private void initComponentes(){
+
+    private void initComponentes() {
         botaoListener = BotaoListener.getInstance();
         //FACHADA PARA LISTAR TODOS OS PLAYERS CADASTRADOS
         facade = new Facade();
@@ -61,40 +60,42 @@ public class SceneTelaInicial extends Scene{
         pane.getStyleClass().add("pane");
         players.getStyleClass().add("players");
     }
-    
-    private void initPlayers(List<Player> lista){
+
+    private void initPlayers(List<Player> lista) {
         lista.stream().forEach((p) -> {
-            Button b = new Button(p.getNome());
-            b.getStyleClass().add("botao");
-            botaoListener.setBotaoPlayersEvent(b, p);
-            listaPlayers.add(b);
+            if (p.isStatus()) {
+                Button b = new Button(p.getNome());
+                b.getStyleClass().add("botao");
+                botaoListener.setBotaoPlayersEvent(b, p);
+                listaPlayers.add(b);
+            }
         });
         players.setItems(listaPlayers);
     }
-    
-    private void initLayout(){
+
+    private void initLayout() {
         pane.setPrefSize(800, 600);
-        
+
         icone.setLayoutX(pane.getPrefWidth() - 50);
         linkCriarNovo.setLayoutX(30);
         linkCriarNovo.setLayoutY(300);
     }
-    
-    private void initListeners(){
+
+    private void initListeners() {
         linkCriarNovo.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                try{
+                try {
                     new TelaCadastroPlayer().start(new Stage());
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
-    
-    public static ListView<Button> getListView(){
+
+    public static ListView<Button> getListView() {
         return SceneTelaInicial.players;
     }
 }

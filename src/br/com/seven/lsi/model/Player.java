@@ -34,11 +34,13 @@ public class Player implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Habilidade> minhasHabilidades;
     private int gemas;
+    private boolean status;
     
     public Player(){
         meusItens = new ArrayList<>();
         meusPersonagens = new ArrayList<>();
         minhasHabilidades = new ArrayList<>();
+        this.status = true;
     }
 
     public Long getId() {
@@ -110,4 +112,21 @@ public class Player implements Serializable {
         }
         return true;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+    public void desativar(){
+        this.status = false;
+    }
+    
+    public void ativar(){
+        this.status = true;
+    }
+    
 }
