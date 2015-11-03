@@ -150,6 +150,11 @@ public class TelaBatalha implements Initializable {
     private double danoHabilidadeQuatroPlayer;
 
     @FXML
+    void teclaPresionada(ActionEvent event) {
+        System.out.println("Precionei uma tecla!");
+    }
+    
+    @FXML
     void usarPoderUm(ActionEvent event) {
         iniciarEsperaPoderUm();
         inserirDanoHabilidade(danoHabilidadeUmPlayer);

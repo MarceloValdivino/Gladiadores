@@ -8,6 +8,10 @@ package br.com.seven.lsi.view;
 
 import br.com.seven.lsi.facade.Facade;
 import br.com.seven.lsi.model.Player;
+import br.com.seven.lsi.scenes.SceneTelaPlayer;
+import br.com.seven.lsi.util.AlertUtil;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,9 +38,11 @@ public class TelaMinhaConta extends Application{
     private Player player;
     private Facade facade;
     private static Stage stage;
+    private Label lnome;
     
-    public TelaMinhaConta(Pane root, Player p){
+    public TelaMinhaConta(Label lnome, Player p){
         player = p;
+        this.lnome = lnome;
     }
     
     private void initComponents(){
@@ -97,6 +103,20 @@ public class TelaMinhaConta extends Application{
                 }
             });
         }
+        
+        editar.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                List<String> entradas = new ArrayList<>();
+                entradas.add("Novo nome:");
+                List<String> respostas = AlertUtil.inputAlert(entradas, "Editar Player", "You shall not pass!");
+                player.setNome(respostas.get(0));
+                facade.atualizarPlayer(player);
+                nome.setText(player.getNome());
+                lnome.setText(player.getNome());
+            }
+        });
     }
     
     @Override

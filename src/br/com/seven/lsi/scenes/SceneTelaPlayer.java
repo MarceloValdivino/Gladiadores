@@ -10,9 +10,10 @@ import br.com.seven.lsi.property.HabilidadesProperty;
 import br.com.seven.lsi.property.ItemProperty;
 import br.com.seven.lsi.property.PersonagensProperty;
 import br.com.seven.lsi.singletone.PlayerOnline;
+import br.com.seven.lsi.view.TelaBatalha;
 import br.com.seven.lsi.view.TelaInventarioHerois;
 import br.com.seven.lsi.view.TelaMinhaConta;
-import br.com.seven.lsi.view.TelaPreapararBatalha;
+import br.com.seven.lsi.view.TelaPrepararBatalha;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -69,8 +70,9 @@ public class SceneTelaPlayer extends Scene {
     private Button botaoLojaDeHerois;
     private Button botaoMeuHerois;
     private Button botaoMinhaConta;
+    private Button botaoTelaBatalha;
 
-    private final Player player;
+    private Player player;
     
     private Facade facade;
 
@@ -113,6 +115,9 @@ public class SceneTelaPlayer extends Scene {
         
         botaoMinhaConta = new Button();
         botaoMinhaConta.setText("Minha Conta");
+        
+        botaoTelaBatalha = new Button();
+        botaoTelaBatalha.setText("Batalha");
 
         itensPlayer = player.getMeusItens();
         obsListItens = FXCollections.observableArrayList();
@@ -149,7 +154,7 @@ public class SceneTelaPlayer extends Scene {
         paneStatus.getChildren().addAll(gema, joias, moeda, lMoedas, lGemas, lJoias, lx1, lx2, lx3);
         paneFoto.getChildren().add(fotoPerfil);
         pane.getChildren().addAll(paneItens, panePersonagens, paneHabilidades, paneStatus, paneFoto, 
-                lPlayer, botaoLojaDeHerois, botaoMeuHerois, botaoMinhaConta);
+                lPlayer, botaoLojaDeHerois, botaoMeuHerois, botaoMinhaConta, botaoTelaBatalha);
 
     }
 
@@ -208,6 +213,9 @@ public class SceneTelaPlayer extends Scene {
         
         botaoMinhaConta.setLayoutX(30);
         botaoMinhaConta.setLayoutY(130);
+        
+        botaoTelaBatalha.setLayoutX(450);
+        botaoTelaBatalha.setLayoutY(30);
 
         gema.setLayoutX(10);
         gema.setLayoutY(10);
@@ -264,10 +272,18 @@ public class SceneTelaPlayer extends Scene {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    new TelaMinhaConta(null, player).start(new Stage());
+                    new TelaMinhaConta(lPlayer, player).start(new Stage());
                 } catch (Exception ex) {
                     System.out.println("erro ao abrir minha conta");
                 }
+            }
+        });
+        
+        botaoTelaBatalha.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                initPreparaBatalha().show();
             }
         });
     }
@@ -283,7 +299,7 @@ public class SceneTelaPlayer extends Scene {
             stageInventarioHerois.setResizable(false);
             return stageInventarioHerois;
         } catch (IOException ex) {
-            Logger.getLogger(SceneTelaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -303,6 +319,23 @@ public class SceneTelaPlayer extends Scene {
         }
         return null;
     }
+    
+    private Stage initPreparaBatalha(){
+        try {
+            Stage stagePreparaBatalha = new Stage();
+            Parent parent = FXMLLoader.
+                    load(getClass().getResource("/layouts/prepara_batalha.fxml"));
+            Scene scene = new Scene(parent);
+            stagePreparaBatalha.setScene(scene);
+            stagePreparaBatalha.setTitle("Prepare-se para Batalha");
+            stagePreparaBatalha.setResizable(false);
+            TelaPrepararBatalha.setStage(stagePreparaBatalha);
+            return stagePreparaBatalha;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     public static Stage getStage() {
         return stage;
@@ -310,5 +343,13 @@ public class SceneTelaPlayer extends Scene {
 
     public static void setStage(Stage stage) {
         SceneTelaPlayer.stage = stage;
+    }
+    
+    public void atualizarPlayer(Player p){
+        player = p;
+    }
+    
+    public void atualizarLabels(){
+        
     }
 }
