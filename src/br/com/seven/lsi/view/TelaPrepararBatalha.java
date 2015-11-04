@@ -71,6 +71,7 @@ public class TelaPrepararBatalha implements Initializable {
                 Stage stageTelaBatalha = initTelaBatalha();
                 stageTelaBatalha.show();
                 TelaBatalha.setStage(stageTelaBatalha);
+                TelaBatalha.setRound(3);
             }
         } else {
             AlertUtil.genericAlert("Seleção", "Escolha de Personagens", "Selecione um personagem para você e um personagem para o computador.", Alert.AlertType.WARNING);
@@ -122,7 +123,7 @@ public class TelaPrepararBatalha implements Initializable {
                     load(getClass().getResource("/layouts/tela_batalha.fxml"));
             Scene scene = new Scene(parent);
             stageInventarioHerois.setScene(scene);
-            stageInventarioHerois.setTitle("Tela Batalha");
+            stageInventarioHerois.setTitle("Tela Batalha - Round 1");
             stageInventarioHerois.setResizable(false);
             return stageInventarioHerois;
         } catch (IOException ex) {

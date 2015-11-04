@@ -8,6 +8,8 @@ package br.com.seven.lsi.view;
 import br.com.seven.lsi.facade.Facade;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -128,7 +130,12 @@ public class TelaBatalha implements Initializable {
     @FXML
     private ProgressBar pBarVidaComputador;
 
+    // Stage dessa tela
     private static Stage stage;
+    // Qual o round que está a batalha
+    private static Integer round;
+    // Se ativo = true = jogo rolando, se ativo = false = round terminou.
+    private boolean ativo;
 
     private Facade facade;
 
@@ -148,12 +155,14 @@ public class TelaBatalha implements Initializable {
     private double danoHabilidadeDoisPlayer;
     private double danoHabilidadeTresPlayer;
     private double danoHabilidadeQuatroPlayer;
+    // Tempo de batalha
+    private int tempoDeBatalha;
 
     @FXML
     void teclaPresionada(ActionEvent event) {
         System.out.println("Precionei uma tecla!");
     }
-    
+
     @FXML
     void usarPoderUm(ActionEvent event) {
         iniciarEsperaPoderUm();
@@ -219,6 +228,8 @@ public class TelaBatalha implements Initializable {
         tempoHabilidadeDoisPlayer = 2.0;
         tempoHabilidadeTresPlayer = 3.0;
         tempoHabilidadeQuatroPlayer = 4.0;
+        // Tempo de duração da batalha
+        tempoDeBatalha = 100;
         // Dano de cada habilidade do personagem do player.
         danoHabilidadeUmPlayer = 5.0;
         danoHabilidadeDoisPlayer = 10.0;
@@ -230,6 +241,9 @@ public class TelaBatalha implements Initializable {
         // A quantidade total de vida do personagem
         VIDA_TOTAL_PERSONAGEM_COMPUTADOR = vidaPersonagemComputador;
         VIDA_TOTAL_PERSONAGEM_PLAYER = vidaPersonagemPlayer;
+        // O jogo foi iniciado
+        initGame();
+        initTempoDeBatalha();
     }
 
     public static Stage getStage(Stage stage) {
@@ -238,6 +252,14 @@ public class TelaBatalha implements Initializable {
 
     public static void setStage(Stage stage) {
         TelaBatalha.stage = stage;
+    }
+
+    public static Integer getRound() {
+        return round;
+    }
+
+    public static void setRound(Integer round) {
+        TelaBatalha.round = round;
     }
 
     private void iniciarEsperaPoderUm() {
@@ -349,5 +371,37 @@ public class TelaBatalha implements Initializable {
 
     private double calcularPercentualDeVida(double vidaPersonagem, double dano) {
         return (((vidaPersonagemComputador * 100) / VIDA_TOTAL_PERSONAGEM_COMPUTADOR) / 100);
+    }
+
+    private void initTempoDeBatalha() {
+        Task t = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                lbTempoBatalha.setText(String.valueOf(tempoDeBatalha));
+                while(tempoDeBatalha>0){
+                    tempoDeBatalha--;
+                    Platform.runLater(() ->{
+                        lbTempoBatalha.setText(String.valueOf(tempoDeBatalha));
+                    });
+                    Thread.sleep(1000);
+                }
+                
+                return null;
+            }
+        };
+        new Thread(t).start();
+    }
+    
+    private void initGame(){
+        Task t = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                while(ativo){
+                    
+                }
+                return null;
+            }
+        };
+        new Thread(t).start();
     }
 }

@@ -27,7 +27,7 @@
       <Button fx:id="btnPoderDois" layoutX="100.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderDois" prefHeight="25.0" prefWidth="43.0" text="W" />
       <Button fx:id="btnPoderTres" layoutX="169.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderTres" prefHeight="25.0" prefWidth="43.0" text="E" />
       <Button fx:id="btnPoderQuatro" layoutX="244.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderQuatro" prefHeight="25.0" prefWidth="43.0" text="R" />
-      <Label fx:id="lbTempoBatalha" layoutX="362.0" layoutY="14.0" prefHeight="101.0" prefWidth="77.0" text="00">
+      <Label fx:id="lbTempoBatalha" alignment="CENTER" contentDisplay="CENTER" layoutX="334.0" layoutY="10.0" prefHeight="108.0" prefWidth="133.0" text="00" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font size="66.0" />
          </font>
