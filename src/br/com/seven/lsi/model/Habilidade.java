@@ -25,12 +25,10 @@ public class Habilidade implements Serializable {
     private Long id;
     private String nome;
     private Double dano;
-    @OneToMany
-    private List<Personagem> personagens;
     private int valorCompra;
+    private double tempoDeRecarga;
     
     public Habilidade(){
-        personagens = new ArrayList<>();
     }
 
     public Long getId() {
@@ -57,14 +55,6 @@ public class Habilidade implements Serializable {
         this.dano = dano;
     }
 
-    public List<Personagem> getPersonagens() {
-        return personagens;
-    }
-
-    public void setPersonagens(List<Personagem> personagens) {
-        this.personagens = personagens;
-    }
-
     public int getValorCompra() {
         return valorCompra;
     }
@@ -72,6 +62,13 @@ public class Habilidade implements Serializable {
     public void setValorCompra(int valorCompra) {
         this.valorCompra = valorCompra;
     }
-    
+
+    public double getTempoDeRecarga() {
+        return tempoDeRecarga;
+    }
+
+    public void setTempoDeRecarga(double tempoDeRecarga) {
+        this.tempoDeRecarga = tempoDeRecarga;
+    }
     
 }

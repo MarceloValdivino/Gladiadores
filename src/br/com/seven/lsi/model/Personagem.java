@@ -7,8 +7,11 @@ package br.com.seven.lsi.model;
 
 import br.com.seven.lsi.myenum.TipoPersonagem;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,10 +32,16 @@ public class Personagem implements Serializable {
     private Double defesa;
     private Double ataque;
     private int valorVenda;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Habilidade> habilidades;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Item> itens;
+    private String imagem;
+    
+    public Personagem(){
+        habilidades = new ArrayList<>();
+        itens = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -104,5 +113,13 @@ public class Personagem implements Serializable {
 
     public void setValorVenda(int valorVenda) {
         this.valorVenda = valorVenda;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 }

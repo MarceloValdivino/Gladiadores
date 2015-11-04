@@ -68,10 +68,12 @@ public class TelaPrepararBatalha implements Initializable {
             boolean choice = AlertUtil.confirmationAlert("Batalha", personagemPlayer.getNome() + " VS " + personagemComputador.getNome(), "Deseja mesmo iniciar a batalha?");
             if (choice) {
                 stage.close();
+                TelaBatalha.setPersonagemComputador(personagemComputador);
+                TelaBatalha.setPersonagemPlayer(personagemPlayer);
                 Stage stageTelaBatalha = initTelaBatalha();
                 stageTelaBatalha.show();
                 TelaBatalha.setStage(stageTelaBatalha);
-                TelaBatalha.setRound(3);
+                TelaBatalha.setRound(1);
             }
         } else {
             AlertUtil.genericAlert("Seleção", "Escolha de Personagens", "Selecione um personagem para você e um personagem para o computador.", Alert.AlertType.WARNING);

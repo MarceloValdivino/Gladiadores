@@ -78,6 +78,7 @@ public class TelaCadastroPlayer extends Application {
             public void handle(ActionEvent event) {
                 Player p = new Player();
                 p.setNome(campoNickName.getText());
+                p.setGemas(10000);
                 facade.salvarPlayer(p);
                 TelaCadastroPlayer.stage.close();
                 List<Player> players = facade.listarPlayers();
