@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="600.0" styleClass="background" stylesheets="@../css/modoGame.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="paneModo" layoutX="37.0" layoutY="55.0" minWidth="-Infinity" prefHeight="177.0" prefWidth="527.0" styleClass="pane" AnchorPane.rightAnchor="36.0">
+         <children>
+            <RadioButton layoutX="157.0" layoutY="116.0" mnemonicParsing="false" onAction="#OptionMultiplayer" prefHeight="32.0" prefWidth="124.0" text="Multiplayer" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </RadioButton>
+            <RadioButton layoutX="157.0" layoutY="29.0" mnemonicParsing="false" onAction="#OptionArcade" prefHeight="17.0" prefWidth="94.0" text="Arcade" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </RadioButton>
+            <Label layoutX="14.0" layoutY="10.0" prefHeight="39.0" prefWidth="87.0" text="Modo:" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneDificuldade" layoutX="34.0" layoutY="269.0" prefHeight="190.0" prefWidth="533.0" styleClass="pane">
+         <children>
+            <RadioButton fx:id="optionEasy" layoutX="221.0" layoutY="14.0" mnemonicParsing="false" onAction="#optionEasy" text="Easy" textFill="WHITE" />
+            <RadioButton fx:id="optionNormal" layoutX="221.0" layoutY="45.0" mnemonicParsing="false" onAction="#optionNormal" text="Normal" textFill="WHITE" />
+            <Label layoutX="14.0" layoutY="14.0" text="Dificuldade:" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="27.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="optionHard" layoutX="221.0" layoutY="78.0" mnemonicParsing="false" onAction="#optionHard" prefHeight="17.0" prefWidth="61.0" text="Hard" textFill="WHITE" />
+            <RadioButton fx:id="optionVeryHard" layoutX="221.0" layoutY="111.0" mnemonicParsing="false" onAction="#optionVeryHard" text="Very Hard" textFill="WHITE" />
+            <RadioButton fx:id="optionHeavenandHell" layoutX="221.0" layoutY="145.0" mnemonicParsing="false" onAction="#optionHeavenandHell" text="Beyond Heaven and Hell" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Button layoutX="324.0" layoutY="472.0" mnemonicParsing="false" onAction="#btnVoltar" prefHeight="71.0" prefWidth="115.0" styleClass="botao" text="Voltar">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font></Button>
+      <Button layoutX="455.0" layoutY="472.0" mnemonicParsing="false" onAction="#btnLutar" prefHeight="71.0" prefWidth="115.0" text="Lutar!">
+         <font>
+            <Font name="Comic Sans MS" size="18.0" />
+         </font>
+         <styleClass>
+            <String fx:value="pane" />
+            <String fx:value="botao" />
+         </styleClass>
+      </Button>
+   </children>
+   <effect>
+      <Lighting>
+         <bumpInput>
+            <Shadow />
+         </bumpInput>
+         <light>
+            <Light.Distant />
+         </light>
+      </Lighting>
+   </effect>
+</AnchorPane>
