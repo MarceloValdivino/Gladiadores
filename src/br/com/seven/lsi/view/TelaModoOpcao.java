@@ -8,10 +8,16 @@ package br.com.seven.lsi.view;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -19,23 +25,21 @@ import javafx.stage.Stage;
  * @author fagundes
  */
 public class TelaModoOpcao implements Initializable {
-    
-    
-    
-    
-    
-    private static Stage stage; 
-    
-    private Stage opcaoModo() {
+
+    private static Stage stage;
+
+    public static void initOpcaoModo() {
         try {
-            Stage stageInventarioHerois = new Stage();
+            Stage stageTelaModoOpcao = new Stage();
             Parent parent = FXMLLoader.
-                    load(getClass().getResource("/layouts/tela_modo.fxml"));
-            Scene scene = new Scene(parent);    
+                    load(TelaModoOpcao.class.getResource("/layouts/tela_modo.fxml"));
+            Scene scene = new Scene(parent);
+            stageTelaModoOpcao.setScene(scene);
+            stage = stageTelaModoOpcao;
+            stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return null;
     }
 
     public static Stage getStage() {
@@ -48,7 +52,87 @@ public class TelaModoOpcao implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initListeners();
     }
-    
+
+    private void initListeners() {
+        paneModo.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case ENTER: {
+                        System.out.println("Iniciar!!!");
+                    }
+                    break;
+                    case ESCAPE: {
+                        TelaModoOpcao.stage.close();
+                    }
+                    break;
+                }
+            }
+        });
+    }
+
+    @FXML
+    private RadioButton optionVeryHard;
+
+    @FXML
+    private RadioButton opitionArcade;
+
+    @FXML
+    private Pane paneDificuldade;
+
+    @FXML
+    private RadioButton optionHeavenandHell;
+
+    @FXML
+    private RadioButton optionNormal;
+
+    @FXML
+    private RadioButton optionHard;
+
+    @FXML
+    private RadioButton optionMultiplayer;
+
+    @FXML
+    private Pane paneModo;
+
+    @FXML
+    private RadioButton optionEasy;
+
+    @FXML
+    void optionEasy(ActionEvent event) {
+
+    }
+
+    @FXML
+    void optionNormal(ActionEvent event) {
+
+    }
+
+    @FXML
+    void optionHard(ActionEvent event) {
+
+    }
+
+    @FXML
+    void optionVeryHard(ActionEvent event) {
+
+    }
+
+    @FXML
+    void optionHeavenandHell(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnVoltar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnLutar(ActionEvent event) {
+
+    }
+
 }

@@ -20,6 +20,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +30,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -70,10 +72,8 @@ public class TelaPrepararBatalha implements Initializable {
                 stage.close();
                 TelaBatalha.setPersonagemComputador(personagemComputador);
                 TelaBatalha.setPersonagemPlayer(personagemPlayer);
-                Stage stageTelaBatalha = initTelaBatalha();
-                stageTelaBatalha.show();
-                TelaBatalha.setStage(stageTelaBatalha);
                 TelaBatalha.setRound(1);
+                TelaBatalha.initTelaBatalha();
             }
         } else {
             AlertUtil.genericAlert("Seleção", "Escolha de Personagens", "Selecione um personagem para você e um personagem para o computador.", Alert.AlertType.WARNING);
@@ -124,6 +124,12 @@ public class TelaPrepararBatalha implements Initializable {
             Parent parent = FXMLLoader.
                     load(getClass().getResource("/layouts/tela_batalha.fxml"));
             Scene scene = new Scene(parent);
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    System.out.println("!!!");
+                }
+            });
             stageInventarioHerois.setScene(scene);
             stageInventarioHerois.setTitle("Tela Batalha - Round 1");
             stageInventarioHerois.setResizable(false);

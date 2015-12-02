@@ -13,6 +13,7 @@ import br.com.seven.lsi.singletone.PlayerOnline;
 import br.com.seven.lsi.view.TelaBatalha;
 import br.com.seven.lsi.view.TelaInventarioHerois;
 import br.com.seven.lsi.view.TelaMinhaConta;
+import br.com.seven.lsi.view.TelaModoOpcao;
 import br.com.seven.lsi.view.TelaPrepararBatalha;
 import java.io.IOException;
 import java.util.List;
@@ -71,6 +72,7 @@ public class SceneTelaPlayer extends Scene {
     private Button botaoMeuHerois;
     private Button botaoMinhaConta;
     private Button botaoTelaBatalha;
+    private Button botaoModoGame;
 
     private Player player;
     
@@ -118,6 +120,9 @@ public class SceneTelaPlayer extends Scene {
         
         botaoTelaBatalha = new Button();
         botaoTelaBatalha.setText("Batalha");
+        
+        botaoModoGame = new Button();
+        botaoModoGame.setText("Escolher Jogo");
 
         itensPlayer = player.getMeusItens();
         obsListItens = FXCollections.observableArrayList();
@@ -154,7 +159,7 @@ public class SceneTelaPlayer extends Scene {
         paneStatus.getChildren().addAll(gema, joias, moeda, lMoedas, lGemas, lJoias, lx1, lx2, lx3);
         paneFoto.getChildren().add(fotoPerfil);
         pane.getChildren().addAll(paneItens, panePersonagens, paneHabilidades, paneStatus, paneFoto, 
-                lPlayer, botaoLojaDeHerois, botaoMeuHerois, botaoMinhaConta, botaoTelaBatalha);
+                lPlayer, botaoLojaDeHerois, botaoMeuHerois, botaoMinhaConta, botaoTelaBatalha, botaoModoGame);
 
     }
 
@@ -216,6 +221,9 @@ public class SceneTelaPlayer extends Scene {
         
         botaoTelaBatalha.setLayoutX(450);
         botaoTelaBatalha.setLayoutY(30);
+        
+        botaoModoGame.setLayoutX(450);
+        botaoModoGame.setLayoutY(80);
 
         gema.setLayoutX(10);
         gema.setLayoutY(10);
@@ -284,6 +292,12 @@ public class SceneTelaPlayer extends Scene {
             @Override
             public void handle(ActionEvent event) {
                 initPreparaBatalha().show();
+            }
+        });
+        botaoModoGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TelaModoOpcao.initOpcaoModo();
             }
         });
     }

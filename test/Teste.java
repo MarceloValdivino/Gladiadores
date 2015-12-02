@@ -8,7 +8,11 @@ import br.com.seven.lsi.facade.Facade;
 import br.com.seven.lsi.model.Habilidade;
 import br.com.seven.lsi.model.Personagem;
 import br.com.seven.lsi.myenum.TipoPersonagem;
-
+import br.com.seven.lsi.view.TelaBatalha;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 /**
  *
  * @author Marcelo
@@ -16,7 +20,10 @@ import br.com.seven.lsi.myenum.TipoPersonagem;
 public class Teste {
 
     public static void main(String[] args) {
-
+        
+        //Stage stage = TelaBatalha.initTelaBatalha();
+        
+        
         Facade facade = new Facade();
         
         Personagem personagem = new Personagem();
@@ -31,7 +38,7 @@ public class Teste {
         mais de 150 de dano 3.0 de tempo de recarga
         
         */
-
+        
         personagem.setNome("Soldade Invernal");
         personagem.setAtaque(130.);
         personagem.setDefesa(120.0);
@@ -429,6 +436,18 @@ public class Teste {
         personagem.getHabilidades().add(habilidade);
 
         facade.salvarPersonagem(personagem);
+        
         System.exit(0);
+    }
+    
+    private static void initFX(JFXPanel jFXPanel){
+        try{
+            Parent parent = FXMLLoader.
+                    load(TelaBatalha.class.getResource("/layouts/tela_batalha.fxml"));
+            Scene scene = new Scene(parent);
+            jFXPanel.setScene(scene);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

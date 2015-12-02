@@ -8,6 +8,7 @@ package br.com.seven.lsi.view;
 import br.com.seven.lsi.facade.Facade;
 import br.com.seven.lsi.model.Personagem;
 import br.com.seven.lsi.util.AlertUtil;
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,7 +32,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.swing.JFrame;
 
 public class TelaBatalha implements Initializable {
 
@@ -141,6 +147,9 @@ public class TelaBatalha implements Initializable {
     @FXML
     private ProgressBar pBarVidaComputador;
 
+    @FXML
+    private AnchorPane panePrincipal;
+
     // Stage dessa tela
     private static Stage stage;
     // Personagem selecionado pelo player para ele
@@ -153,6 +162,8 @@ public class TelaBatalha implements Initializable {
     private boolean ativo;
 
     private Facade facade;
+
+    private Scene scene;
 
     // Quantidade de vida de cada personagem
     private double vidaPersonagemComputador;
@@ -189,31 +200,49 @@ public class TelaBatalha implements Initializable {
     // Tempo de batalha
     private int tempoDeBatalha;
 
+    public TelaBatalha() {
+    }
+
     @FXML
     void teclaPresionada(ActionEvent event) {
-        System.out.println("Precionei uma tecla!");
     }
 
     @FXML
     void usarPoderUm(ActionEvent event) {
+        usarHabilidadeUm();
+    }
+
+    public void usarHabilidadeUm() {
         iniciarEsperaPoderUmPlayer();
         inserirDanoHabilidadePlayer(danoHabilidadeUmPlayer);
     }
 
     @FXML
     void usarPoderDois(ActionEvent event) {
+        usarHabilidadeDois();
+    }
+
+    public void usarHabilidadeDois() {
         iniciarEsperaPoderDoisPlayer();
         inserirDanoHabilidadePlayer(danoHabilidadeDoisPlayer);
     }
 
     @FXML
     void usarPoderTres(ActionEvent event) {
+        usarHabilidadeTres();
+    }
+
+    public void usarHabilidadeTres() {
         iniciarEsperaPoderTresPlayer();
         inserirDanoHabilidadePlayer(danoHabilidadeTresPlayer);
     }
 
     @FXML
     void usarPoderQuatro(ActionEvent event) {
+        usarHabilidadeQuatro();
+    }
+
+    public void usarHabilidadeQuatro() {
         iniciarEsperaPoderQuatroPlayer();
         inserirDanoHabilidadePlayer(danoHabilidadeQuatroPlayer);
     }
@@ -240,6 +269,7 @@ public class TelaBatalha implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         // Inicia a facade
         facade = new Facade();
         // Todas as habilidades podem ser usadas no inicio
@@ -312,6 +342,44 @@ public class TelaBatalha implements Initializable {
         initTempoDeBatalha();
         initEsperas();
         initInteligenciaArtificial();
+        scene = panePrincipal.getScene();
+        panePrincipal.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case Q: {
+                        usarHabilidadeUm();
+                    }
+                    break;
+                    case W: {
+                        usarHabilidadeDois();
+                        break;
+                    }
+                    case E: {
+                        usarHabilidadeTres();
+                        break;
+                    }
+                    case R: {
+                        usarHabilidadeQuatro();
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    private void initListener() {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case Q: {
+                        usarHabilidadeUm();
+                    }
+                    break;
+                }
+            }
+        });
     }
 
     public static Stage getStage(Stage stage) {
@@ -331,9 +399,10 @@ public class TelaBatalha implements Initializable {
     }
 
     private void iniciarEsperaPoderUmPlayer() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
+
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     boolean esperando = true;
                     btnPoderUm.setDisable(esperando);
@@ -350,14 +419,17 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderDoisPlayer() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
+
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     boolean esperando = true;
                     btnPoderDois.setDisable(esperando);
@@ -374,14 +446,16 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderTresPlayer() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     boolean esperando = true;
                     btnPoderTres.setDisable(esperando);
@@ -398,14 +472,17 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderQuatroPlayer() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
+
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     boolean esperando = true;
                     btnPoderQuatro.setDisable(esperando);
@@ -422,14 +499,17 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderUmComputador() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
+
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     poderUm = false;
                     boolean esperando = true;
@@ -446,14 +526,16 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderDoisComputador() {
-        new Thread(new Runnable() {
+        Task t= new Task() {
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     poderDois = false;
                     boolean esperando = true;
@@ -470,14 +552,17 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderTresComputador() {
-        new Thread(new Runnable() {
+        Task t = new Task(){
+
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     poderTres = false;
                     boolean esperando = true;
@@ -494,14 +579,16 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-            }
-        }).start();
+                return null;
+            }  
+        };
+        new Thread(t).start();
     }
 
     private void iniciarEsperaPoderQuatroComputador() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 try {
                     poderQuatro = false;
                     boolean esperando = true;
@@ -518,14 +605,14 @@ public class TelaBatalha implements Initializable {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void inserirDanoHabilidadePlayer(double danoHabilidade) {
-        System.out.println("Vida personagem computador(antes): " + vidaPersonagemComputador);
         vidaPersonagemComputador -= (danoHabilidade - personagemComputador.getDefesa());
-        System.out.println("Vida personagem computador(depois): " + vidaPersonagemComputador);
         if (vidaPersonagemComputador < 0) {
             pBarVidaComputador.setProgress(0.0);
             ativo = false;
@@ -539,8 +626,7 @@ public class TelaBatalha implements Initializable {
                 round++;
                 if (continuar) {
                     TelaBatalha.stage.close();
-                    TelaBatalha.stage = initTelaBatalha();
-                    stage.show();
+                    initTelaBatalha();
                 } else {
                     TelaBatalha.stage.close();
                 }
@@ -552,10 +638,7 @@ public class TelaBatalha implements Initializable {
     }
 
     private void inserirDanoHabilidadeComputador(double danoHabilidade) {
-        System.out.println("Vida player(antes): " + vidaPersonagemPlayer);
-        System.out.println("Dano(computador no player): " + (danoHabilidade - personagemPlayer.getDefesa()));
         vidaPersonagemPlayer -= -(danoHabilidade - personagemPlayer.getDefesa());
-        System.out.println("Vida player(depois): " + vidaPersonagemPlayer);
         if (vidaPersonagemPlayer <= 0) {
             pBarVidaPlayer.setProgress(0.0);
             ativo = false;
@@ -568,8 +651,7 @@ public class TelaBatalha implements Initializable {
                 round++;
                 if (continuar) {
                     TelaBatalha.stage.close();
-                    TelaBatalha.stage = initTelaBatalha();
-                    stage.show();
+                    initTelaBatalha();
                 } else {
                     TelaBatalha.stage.close();
                 }
@@ -619,20 +701,20 @@ public class TelaBatalha implements Initializable {
         TelaBatalha.personagemComputador = personagemComputador;
     }
 
-    private Stage initTelaBatalha() {
+    public static void initTelaBatalha() {
         try {
-            Stage stageInventarioHerois = new Stage();
+            Stage stageTelaBatalha = new Stage();
             Parent parent = FXMLLoader.
-                    load(getClass().getResource("/layouts/tela_batalha.fxml"));
+                    load(TelaBatalha.class.getResource("/layouts/tela_batalha.fxml"));
             Scene scene = new Scene(parent);
-            stageInventarioHerois.setScene(scene);
-            stageInventarioHerois.setTitle("Tela Batalha - Round " + round);
-            stageInventarioHerois.setResizable(false);
-            return stageInventarioHerois;
+            stageTelaBatalha.setScene(scene);
+            stageTelaBatalha.setTitle("Tela Batalha - Round " + round);
+            stageTelaBatalha.setResizable(false);
+            stageTelaBatalha.show();
+            TelaBatalha.stage = stageTelaBatalha;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return null;
     }
 
     private void initEsperas() {
@@ -647,9 +729,10 @@ public class TelaBatalha implements Initializable {
     }
 
     private void initInteligenciaArtificial() {
-        new Thread(new Runnable() {
+        Task t = new Task() {
+
             @Override
-            public void run() {
+            protected Object call() throws Exception {
                 while (ativo) {
                     try {
                         Thread.sleep(500);
@@ -664,59 +747,72 @@ public class TelaBatalha implements Initializable {
                         ex.printStackTrace();
                     }
                 }
+                return null;
             }
-        }).start();
+        };
+        new Thread(t).start();
     }
 
     private void usarPoderUmComputador() {
         // Inicia o poder um do computador
         if (ativo && poderUm) {
-            new Thread(new Runnable() {
+            Task t = new Task() {
                 @Override
-                public void run() {
+                protected Object call() throws Exception {
                     inserirDanoHabilidadeComputador(danoHabilidadeUmComputador);
                     iniciarEsperaPoderUmComputador();
+                    return null;
                 }
-            }).start();
+            };
+            new Thread(t).start();
         }
     }
 
     private void usarPoderDoisComputador() {
         // Inicia o poder dois do computador
         if (ativo && poderDois) {
-            new Thread(new Runnable() {
+            Task t = new Task() {
+
                 @Override
-                public void run() {
+                protected Object call() throws Exception {
                     inserirDanoHabilidadeComputador(danoHabilidadeDoisComputador);
                     iniciarEsperaPoderDoisComputador();
+                    return null;
                 }
-            }).start();
+            };
+            new Thread(t).start();
         }
     }
 
     private void usarPoderTresComputador() {
         // Inicia o poder tres do computador
         if (ativo && poderTres) {
-            new Thread(new Runnable() {
+            Task t = new Task() {
+
                 @Override
-                public void run() {
+                protected Object call() throws Exception {
                     inserirDanoHabilidadeComputador(danoHabilidadeTresComputador);
                     iniciarEsperaPoderTresComputador();
+                    return null;
                 }
-            }).start();
+            };
+            new Thread(t).start();
         }
     }
 
     private void usarPoderQuatroComputador() {
         // Inicia o poder quatro do computador
         if (ativo && poderQuatro) {
-            new Thread(new Runnable() {
+            Task t = new Task() {
+
                 @Override
-                public void run() {
+                protected Object call() throws Exception {
                     inserirDanoHabilidadeComputador(danoHabilidadeQuatroComputador);
                     iniciarEsperaPoderQuatroComputador();
+                    return null;
                 }
-            }).start();
+            };
+            new Thread(t).start();
         }
     }
 
