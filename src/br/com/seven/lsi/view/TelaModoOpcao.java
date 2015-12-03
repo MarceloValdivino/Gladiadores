@@ -5,8 +5,15 @@
  */
 package br.com.seven.lsi.view;
 
+import br.com.seven.lsi.facade.Facade;
+import br.com.seven.lsi.model.MeuPersonagem;
+import br.com.seven.lsi.model.Player;
+import br.com.seven.lsi.singletone.PlayerOnline;
+import br.com.seven.lsi.util.AlertUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +22,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -27,6 +36,7 @@ import javafx.stage.Stage;
 public class TelaModoOpcao implements Initializable {
 
     private static Stage stage;
+    private Facade facade;
 
     public static void initOpcaoModo() {
         try {
@@ -52,6 +62,7 @@ public class TelaModoOpcao implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        facade = new Facade();
         initListeners();
     }
 
@@ -61,7 +72,7 @@ public class TelaModoOpcao implements Initializable {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case ENTER: {
-                        System.out.println("Iniciar!!!");
+                        iniciarBatalhar();
                     }
                     break;
                     case ESCAPE: {
@@ -86,6 +97,9 @@ public class TelaModoOpcao implements Initializable {
     private RadioButton optionHeavenandHell;
 
     @FXML
+    private ToggleGroup dificuldade;
+
+    @FXML
     private RadioButton optionNormal;
 
     @FXML
@@ -98,32 +112,10 @@ public class TelaModoOpcao implements Initializable {
     private Pane paneModo;
 
     @FXML
+    private ToggleGroup modo;
+
+    @FXML
     private RadioButton optionEasy;
-
-    @FXML
-    void optionEasy(ActionEvent event) {
-
-    }
-
-    @FXML
-    void optionNormal(ActionEvent event) {
-
-    }
-
-    @FXML
-    void optionHard(ActionEvent event) {
-
-    }
-
-    @FXML
-    void optionVeryHard(ActionEvent event) {
-
-    }
-
-    @FXML
-    void optionHeavenandHell(ActionEvent event) {
-
-    }
 
     @FXML
     void btnVoltar(ActionEvent event) {
@@ -132,7 +124,45 @@ public class TelaModoOpcao implements Initializable {
 
     @FXML
     void btnLutar(ActionEvent event) {
-
+        iniciarBatalhar();
     }
 
+    private void iniciarBatalhar() {
+        System.out.println("Modo: "+(modo.getToggles().indexOf(modo.getSelectedToggle())));
+        switch (modo.getToggles().indexOf(modo.getSelectedToggle())) {
+            case -1: {
+                AlertUtil.genericAlert("Modo de Game", "Por favor, selecione um modo de jogo", "", Alert.AlertType.WARNING);
+            }
+            break;
+                // Modo Arcade
+            case 1: {
+                // AlertUtil.confirmationAlert("Modo Arcade", "Modo Arcade ainda não está pronto!", "Estamos terminando o modo arcade, quando estiver pronto você poderá jogar.\nEnquanto isso jogue com um amigo.");
+                
+            }
+            break;
+                // Modo Multiplayer
+            case 0: {
+                List<Player> players = facade.listarPlayersComPersonagens();
+                for(Player p : players){
+                    System.out.println("Player: "+p.getNome());
+                }
+                players.remove(PlayerOnline.getPlayer());
+                if (players.size() > 0) {
+                    String[] choices = new String[players.size()];
+                    for (int i = 0; i < choices.length; i++) {
+                        choices[i] = players.get(i).getNome();
+                    }
+                    String choice = AlertUtil.choiceAlert(choices, "Modo Multiplayer", "Selecione um amigo para jogar com você\n(Apenas amigos com personagens podem ser selecionados.)", "Amigo: ");
+                    Player playerTwo = facade.buscarPlayer(choice);
+                    PlayerOnline.setPlayerTwo(playerTwo);
+                    TelaModoOpcao.stage.close();
+                    TelaPrepararBatalha.initPreparaBatalha();
+                } else {
+                    AlertUtil.genericAlert("Modo Multiplayer", "Problema ao iniciar Game.", "Não há nenhum amigo cadastrado para jogar.", Alert.AlertType.INFORMATION);
+                }
+            }
+            break;
+        }
+
+    }
 }

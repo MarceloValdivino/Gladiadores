@@ -15,6 +15,7 @@ public class PlayerOnline {
 
     private static PlayerOnline instance = null;
     private static Player player;
+    private static Player playerTwo;
     
     private PlayerOnline(){
     }
@@ -33,4 +34,12 @@ public class PlayerOnline {
     public static void setPlayer(Player player) {
         PlayerOnline.player = player;
     }    
+
+    public static Player getPlayerTwo() {
+        return playerTwo;
+    }
+
+    public static void setPlayerTwo(Player playerTwo) {
+        PlayerOnline.playerTwo = playerTwo;
+    }
 }

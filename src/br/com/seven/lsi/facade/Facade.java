@@ -110,6 +110,14 @@ public class Facade {
         return playerDao.list();
     }
     
+    public List<Player> listarPlayersComPersonagens(){
+        return playerDao.playerComPersonagem();
+    }
+    
+    public Player buscarPlayer(String nome){
+        return playerDao.getPlayerPorNome(nome);
+    }
+    
     public void salvarMeuPersonagem(MeuPersonagem meuPersonagem){
         meuPersonagemDao.save(meuPersonagem);
     }

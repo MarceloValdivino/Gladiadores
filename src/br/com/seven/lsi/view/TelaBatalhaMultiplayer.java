@@ -8,16 +8,11 @@ package br.com.seven.lsi.view;
 import br.com.seven.lsi.facade.Facade;
 import br.com.seven.lsi.model.Personagem;
 import br.com.seven.lsi.util.AlertUtil;
-import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,7 +31,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class TelaBatalha implements Initializable {
+/**
+ *
+ * @author Marcelo
+ */
+public class TelaBatalhaMultiplayer implements Initializable {
 
     @FXML
     private Button btnPoderUm;
@@ -48,10 +47,16 @@ public class TelaBatalha implements Initializable {
     private ImageView imgComputer;
 
     @FXML
+    private Button btnPoderDoisPlayerTwo;
+
+    @FXML
     private ProgressBar pBarPoderQuatComp;
 
     @FXML
     private Label lbTercHabilidadeCompBar;
+
+    @FXML
+    private Label lbPoderTresBotao1;
 
     @FXML
     private Label llbPoderDoisBotao;
@@ -60,7 +65,13 @@ public class TelaBatalha implements Initializable {
     private Label lbSegHabilidadeBar;
 
     @FXML
+    private Button btnItemQuatro1;
+
+    @FXML
     private Label lbQuartHabilidadeCompBar;
+
+    @FXML
+    private Button btnItemDois1;
 
     @FXML
     private Button btnItemUm;
@@ -69,10 +80,16 @@ public class TelaBatalha implements Initializable {
     private ProgressBar pBarPoderTres;
 
     @FXML
+    private Label llbPoderDoisBotao1;
+
+    @FXML
     private ProgressBar pBarPoderQuatro;
 
     @FXML
     private Label lbPriHabilidadeBar;
+
+    @FXML
+    private Button btnItemTres1;
 
     @FXML
     private Label lbQuarHabilidadeBar;
@@ -81,10 +98,16 @@ public class TelaBatalha implements Initializable {
     private ProgressBar pBarPoderTerComp;
 
     @FXML
+    private Button btnPoderQuatroPlayerTwo;
+
+    @FXML
     private ProgressBar pBarPoderUmComp;
 
     @FXML
     private Label lbSegHabilidadeCompBar;
+
+    @FXML
+    private Button btnPoderUmPlayerTwo;
 
     @FXML
     private Button btnItemQuatro;
@@ -96,7 +119,7 @@ public class TelaBatalha implements Initializable {
     private Button btnItemDois;
 
     @FXML
-    private ListView<?> lViewItens;
+    private Button btnPoderTresPlayerTwo;
 
     @FXML
     private ProgressBar pBarVidaPlayer;
@@ -109,6 +132,9 @@ public class TelaBatalha implements Initializable {
 
     @FXML
     private Label lbPoderUmBotao;
+
+    @FXML
+    private Label lbPoderUmBotao1;
 
     @FXML
     private ProgressBar pBarPoderDoisComp;
@@ -135,6 +161,15 @@ public class TelaBatalha implements Initializable {
     private Label lbTerHabilidadeBar;
 
     @FXML
+    private Button btnItemUm1;
+
+    @FXML
+    private Label lbPoderQuatroBotao1;
+
+    @FXML
+    private AnchorPane panePrincipal;
+
+    @FXML
     private Label lbPriHabilidadeCompBar;
 
     @FXML
@@ -145,9 +180,6 @@ public class TelaBatalha implements Initializable {
 
     @FXML
     private ProgressBar pBarVidaComputador;
-
-    @FXML
-    private AnchorPane panePrincipal;
 
     // Stage dessa tela
     private static Stage stage;
@@ -196,16 +228,13 @@ public class TelaBatalha implements Initializable {
     private boolean poderDois;
     private boolean poderTres;
     private boolean poderQuatro;
-    // Informa quando o poder do Player pode ser usado
+    // Informa quando um poder do plyaer tá liberado
     private boolean poderUmPlayer;
     private boolean poderDoisPlayer;
     private boolean poderTresPlayer;
     private boolean poderQuatroPlayer;
     // Tempo de batalha
     private int tempoDeBatalha;
-
-    public TelaBatalha() {
-    }
 
     @FXML
     void teclaPresionada(ActionEvent event) {
@@ -216,7 +245,7 @@ public class TelaBatalha implements Initializable {
         usarHabilidadeUm();
     }
 
-    public void usarHabilidadeUm() {
+    private void usarHabilidadeUm() {
         if (!poderUmPlayer) {
             iniciarEsperaPoderUmPlayer();
             inserirDanoHabilidadePlayer(danoHabilidadeUmPlayer);
@@ -228,7 +257,7 @@ public class TelaBatalha implements Initializable {
         usarHabilidadeDois();
     }
 
-    public void usarHabilidadeDois() {
+    private void usarHabilidadeDois() {
         if (!poderDoisPlayer) {
             iniciarEsperaPoderDoisPlayer();
             inserirDanoHabilidadePlayer(danoHabilidadeDoisPlayer);
@@ -240,7 +269,7 @@ public class TelaBatalha implements Initializable {
         usarHabilidadeTres();
     }
 
-    public void usarHabilidadeTres() {
+    private void usarHabilidadeTres() {
         if (!poderTresPlayer) {
             iniciarEsperaPoderTresPlayer();
             inserirDanoHabilidadePlayer(danoHabilidadeTresPlayer);
@@ -252,7 +281,7 @@ public class TelaBatalha implements Initializable {
         usarHabilidadeQuatro();
     }
 
-    public void usarHabilidadeQuatro() {
+    private void usarHabilidadeQuatro() {
         if (!poderQuatroPlayer) {
             iniciarEsperaPoderQuatroPlayer();
             inserirDanoHabilidadePlayer(danoHabilidadeQuatroPlayer);
@@ -348,12 +377,14 @@ public class TelaBatalha implements Initializable {
         llbPoderDoisBotao.setText(personagemPlayer.getHabilidades().get(1).getDano().toString());
         lbPoderTresBotao.setText(personagemPlayer.getHabilidades().get(2).getDano().toString());
         lbPoderQuatroBotao.setText(personagemPlayer.getHabilidades().get(3).getDano().toString());
+        
+        lbPoderUmBotao1.setText(personagemComputador.getHabilidades().get(0).getDano().toString());
+        llbPoderDoisBotao1.setText(personagemComputador.getHabilidades().get(1).getDano().toString());
+        lbPoderTresBotao1.setText(personagemComputador.getHabilidades().get(2).getDano().toString());
+        lbPoderQuatroBotao1.setText(personagemComputador.getHabilidades().get(3).getDano().toString());
         // O jogo foi iniciado
         ativo = true;
-        initUsarPoderesComputador();
         initTempoDeBatalha();
-        initEsperas();
-        initInteligenciaArtificial();
         scene = panePrincipal.getScene();
         initListener();
     }
@@ -379,6 +410,22 @@ public class TelaBatalha implements Initializable {
                         usarHabilidadeQuatro();
                         break;
                     }
+                    case U: {
+                        usarPoderUmComputador();
+                        break;
+                    }
+                    case I: {
+                        usarPoderDoisComputador();
+                        break;
+                    }
+                    case O: {
+                        usarPoderTresComputador();
+                        break;
+                    }
+                    case P: {
+                        usarPoderQuatroComputador();
+                        break;
+                    }
                 }
             }
         });
@@ -389,7 +436,7 @@ public class TelaBatalha implements Initializable {
     }
 
     public static void setStage(Stage stage) {
-        TelaBatalha.stage = stage;
+        TelaBatalhaMultiplayer.stage = stage;
     }
 
     public static Integer getRound() {
@@ -397,7 +444,7 @@ public class TelaBatalha implements Initializable {
     }
 
     public static void setRound(Integer round) {
-        TelaBatalha.round = round;
+        TelaBatalhaMultiplayer.round = round;
     }
 
     private void iniciarEsperaPoderUmPlayer() {
@@ -482,7 +529,7 @@ public class TelaBatalha implements Initializable {
 
     private void iniciarEsperaPoderQuatroPlayer() {
         Task t = new Task() {
-            
+
             @Override
             protected Object call() throws Exception {
                 try {
@@ -513,18 +560,18 @@ public class TelaBatalha implements Initializable {
             @Override
             protected Object call() throws Exception {
                 try {
-                    poderUm = false;
-                    boolean esperando = true;
+                    poderUm = true;
+                    btnPoderUmPlayerTwo.setDisable(poderUm);
                     pBarPoderUmComp.setProgress(0.0);
                     double valor = (2 / (tempoHabilidadeUmComputador * 1000));
-                    while (esperando) {
+                    while (poderUm) {
                         Thread.sleep(1);
                         pBarPoderUmComp.setProgress(pBarPoderUmComp.getProgress() + valor);
                         if (pBarPoderUmComp.getProgress() >= 1.0) {
-                            esperando = false;
-                            poderUm = true;
+                            poderUm = false;
                         }
                     }
+                    btnPoderUmPlayerTwo.setDisable(poderUm);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -539,18 +586,18 @@ public class TelaBatalha implements Initializable {
             @Override
             protected Object call() throws Exception {
                 try {
-                    poderDois = false;
-                    boolean esperando = true;
+                    poderDois = true;
+                    btnPoderDoisPlayerTwo.setDisable(poderDois);
                     pBarPoderDoisComp.setProgress(0.0);
                     double valor = (2 / (tempoHabilidadeDoisComputador * 1000));
-                    while (esperando) {
+                    while (poderDois) {
                         Thread.sleep(1);
                         pBarPoderDoisComp.setProgress(pBarPoderDoisComp.getProgress() + valor);
                         if (pBarPoderDoisComp.getProgress() >= 1.0) {
-                            esperando = false;
-                            poderDois = true;
+                            poderDois = false;
                         }
                     }
+                    btnPoderDoisPlayerTwo.setDisable(poderDois);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -566,18 +613,18 @@ public class TelaBatalha implements Initializable {
             @Override
             protected Object call() throws Exception {
                 try {
-                    poderTres = false;
-                    boolean esperando = true;
+                    poderTres = true;
+                    btnPoderTresPlayerTwo.setDisable(poderTres);
                     pBarPoderTerComp.setProgress(0.0);
                     double valor = (2 / (tempoHabilidadeTresComputador * 1000));
-                    while (esperando) {
+                    while (poderTres) {
                         Thread.sleep(1);
                         pBarPoderTerComp.setProgress(pBarPoderTerComp.getProgress() + valor);
                         if (pBarPoderTerComp.getProgress() >= 1.0) {
-                            esperando = false;
-                            poderTres = true;
+                            poderTres = false;
                         }
                     }
+                    btnPoderTresPlayerTwo.setDisable(poderTres);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -592,18 +639,18 @@ public class TelaBatalha implements Initializable {
             @Override
             protected Object call() throws Exception {
                 try {
-                    poderQuatro = false;
-                    boolean esperando = true;
+                    poderQuatro = true;
+                    btnPoderQuatroPlayerTwo.setDisable(poderQuatro);
                     pBarPoderQuatComp.setProgress(0.0);
                     double valor = (2 / (tempoHabilidadeQuatroComputador * 1000));
-                    while (esperando) {
+                    while (poderQuatro) {
                         Thread.sleep(1);
                         pBarPoderQuatComp.setProgress(pBarPoderQuatComp.getProgress() + valor);
                         if (pBarPoderQuatComp.getProgress() >= 1.0) {
-                            esperando = false;
-                            poderQuatro = true;
+                            poderQuatro = false;
                         }
                     }
+                    btnPoderQuatroPlayerTwo.setDisable(poderQuatro);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -618,19 +665,19 @@ public class TelaBatalha implements Initializable {
         if (vidaPersonagemComputador < 0) {
             pBarVidaComputador.setProgress(0.0);
             ativo = false;
-            TelaBatalha.stage.setOpacity(0.99);
+            TelaBatalhaMultiplayer.stage.setOpacity(0.99);
             if (round == 3) {
                 AlertUtil.genericAlert("Round - " + round, "VENDEDOR!!!", "Muito bem, você conseguiu ganhar a batalha!", Alert.AlertType.INFORMATION);
                 round = 1;
-                TelaBatalha.stage.close();
+                TelaBatalhaMultiplayer.stage.close();
             } else {
                 boolean continuar = AlertUtil.confirmationAlert("Fim do Round - " + round, "VOCÊ GANHOU UM ROUND!", "Deseja continuar a batalha, partir para o ROUND: " + (round + 1) + "?");
                 round++;
                 if (continuar) {
-                    TelaBatalha.stage.close();
-                    initTelaBatalha();
+                    TelaBatalhaMultiplayer.stage.close();
+                    initTelaBatalhaMultiplayer();
                 } else {
-                    TelaBatalha.stage.close();
+                    TelaBatalhaMultiplayer.stage.close();
                 }
             }
         } else {
@@ -647,15 +694,15 @@ public class TelaBatalha implements Initializable {
             if (round == 3) {
                 AlertUtil.genericAlert("Round - " + round, "PERDEDOR!!!", "Muito bem, você conseguiu ganhar a batalha!", Alert.AlertType.INFORMATION);
                 round = 1;
-                TelaBatalha.stage.close();
+                TelaBatalhaMultiplayer.stage.close();
             } else {
                 boolean continuar = AlertUtil.confirmationAlert("Fim do Round - " + round, "VOCÊ PERDEU UM ROUND!", "Deseja continuar a batalha, partir para o ROUND: " + (round + 1) + "?");
                 round++;
                 if (continuar) {
-                    TelaBatalha.stage.close();
-                    initTelaBatalha();
+                    TelaBatalhaMultiplayer.stage.close();
+                    initTelaBatalhaMultiplayer();
                 } else {
-                    TelaBatalha.stage.close();
+                    TelaBatalhaMultiplayer.stage.close();
                 }
             }
         } else {
@@ -692,7 +739,7 @@ public class TelaBatalha implements Initializable {
     }
 
     public static void setPersonagemPlayer(Personagem personagemPlayer) {
-        TelaBatalha.personagemPlayer = personagemPlayer;
+        TelaBatalhaMultiplayer.personagemPlayer = personagemPlayer;
     }
 
     public static Personagem getPersonagemComputador() {
@@ -700,20 +747,20 @@ public class TelaBatalha implements Initializable {
     }
 
     public static void setPersonagemComputador(Personagem personagemComputador) {
-        TelaBatalha.personagemComputador = personagemComputador;
+        TelaBatalhaMultiplayer.personagemComputador = personagemComputador;
     }
 
-    public static void initTelaBatalha() {
+    public static void initTelaBatalhaMultiplayer() {
         try {
             Stage stageTelaBatalha = new Stage();
             Parent parent = FXMLLoader.
-                    load(TelaBatalha.class.getResource("/layouts/tela_batalha.fxml"));
+                    load(TelaBatalha.class.getResource("/layouts/tela_batalha_multiplayer.fxml"));
             Scene scene = new Scene(parent);
             stageTelaBatalha.setScene(scene);
             stageTelaBatalha.setTitle("Tela Batalha - Round " + round);
             stageTelaBatalha.setResizable(false);
             stageTelaBatalha.show();
-            TelaBatalha.stage = stageTelaBatalha;
+            TelaBatalhaMultiplayer.stage = stageTelaBatalha;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -730,98 +777,36 @@ public class TelaBatalha implements Initializable {
         iniciarEsperaPoderQuatroComputador();
     }
 
-    private void initInteligenciaArtificial() {
-        Task t = new Task() {
-
-            @Override
-            protected Object call() throws Exception {
-                while (ativo) {
-                    try {
-                        Thread.sleep(500);
-                        usarPoderUmComputador();
-                        Thread.sleep(500);
-                        usarPoderDoisComputador();
-                        Thread.sleep(500);
-                        usarPoderTresComputador();
-                        Thread.sleep(500);
-                        usarPoderQuatroComputador();
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                return null;
-            }
-        };
-        new Thread(t).start();
-    }
-
     private void usarPoderUmComputador() {
         // Inicia o poder um do computador
-        if (ativo && poderUm) {
-            Task t = new Task() {
-                @Override
-                protected Object call() throws Exception {
-                    inserirDanoHabilidadeComputador(danoHabilidadeUmComputador);
-                    iniciarEsperaPoderUmComputador();
-                    return null;
-                }
-            };
-            new Thread(t).start();
+        if (!poderUm) {
+            inserirDanoHabilidadeComputador(danoHabilidadeUmComputador);
+            iniciarEsperaPoderUmComputador();
         }
     }
 
     private void usarPoderDoisComputador() {
         // Inicia o poder dois do computador
-        if (ativo && poderDois) {
-            Task t = new Task() {
+        if (!poderDois) {
+            inserirDanoHabilidadeComputador(danoHabilidadeDoisComputador);
+            iniciarEsperaPoderDoisComputador();
 
-                @Override
-                protected Object call() throws Exception {
-                    inserirDanoHabilidadeComputador(danoHabilidadeDoisComputador);
-                    iniciarEsperaPoderDoisComputador();
-                    return null;
-                }
-            };
-            new Thread(t).start();
         }
     }
 
     private void usarPoderTresComputador() {
         // Inicia o poder tres do computador
-        if (ativo && poderTres) {
-            Task t = new Task() {
-
-                @Override
-                protected Object call() throws Exception {
-                    inserirDanoHabilidadeComputador(danoHabilidadeTresComputador);
-                    iniciarEsperaPoderTresComputador();
-                    return null;
-                }
-            };
-            new Thread(t).start();
+        if (!poderTres) {
+            inserirDanoHabilidadeComputador(danoHabilidadeTresComputador);
+            iniciarEsperaPoderTresComputador();
         }
     }
 
     private void usarPoderQuatroComputador() {
         // Inicia o poder quatro do computador
-        if (ativo && poderQuatro) {
-            Task t = new Task() {
-
-                @Override
-                protected Object call() throws Exception {
-                    inserirDanoHabilidadeComputador(danoHabilidadeQuatroComputador);
-                    iniciarEsperaPoderQuatroComputador();
-                    return null;
-                }
-            };
-            new Thread(t).start();
+        if (!poderQuatro) {
+            inserirDanoHabilidadeComputador(danoHabilidadeQuatroComputador);
+            iniciarEsperaPoderQuatroComputador();
         }
-    }
-
-    private void initUsarPoderesComputador() {
-        poderUm = true;
-        poderDois = true;
-        poderTres = true;
-        poderQuatro = true;
     }
 }

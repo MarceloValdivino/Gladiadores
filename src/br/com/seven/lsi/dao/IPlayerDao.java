@@ -6,6 +6,7 @@
 package br.com.seven.lsi.dao;
 
 import br.com.seven.lsi.model.Player;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,7 @@ import br.com.seven.lsi.model.Player;
  */
 public interface IPlayerDao extends IGenericoDao<Player> {
     
+    public List<Player> playerComPersonagem();
+    
+    public Player getPlayerPorNome(String nome);
 }

@@ -13,7 +13,7 @@
       <ImageView id="playerTow" fitHeight="300.0" fitWidth="200.0" layoutX="550.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" styleClass="playerTow" />
       <ListView id="listHeroOne" fx:id="listaHeriosPlayer" layoutX="51.0" layoutY="83.0" prefHeight="403.0" prefWidth="200.0" styleClass="listHero" />
       <ListView id="listHeroTwo" fx:id="listaHeroisComputador" layoutX="550.0" layoutY="83.0" prefHeight="403.0" prefWidth="200.0" styleClass="listHero" />
-      <Label layoutX="606.0" layoutY="40.0" text="Computer" textAlignment="CENTER" textFill="#cdc6c6">
+      <Label fx:id="lbPersonagemDois" layoutX="606.0" layoutY="40.0" text="Computer" textAlignment="CENTER" textFill="#cdc6c6">
          <font>
             <Font name="Arial" size="20.0" />
          </font>

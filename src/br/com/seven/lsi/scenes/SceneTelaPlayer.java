@@ -4,14 +4,11 @@ import br.com.seven.lsi.facade.Facade;
 import br.com.seven.lsi.model.Habilidade;
 import br.com.seven.lsi.model.Item;
 import br.com.seven.lsi.model.MeuPersonagem;
-import br.com.seven.lsi.model.Personagem;
 import br.com.seven.lsi.model.Player;
 import br.com.seven.lsi.property.HabilidadesProperty;
 import br.com.seven.lsi.property.ItemProperty;
 import br.com.seven.lsi.property.PersonagensProperty;
 import br.com.seven.lsi.singletone.PlayerOnline;
-import br.com.seven.lsi.view.TelaBatalha;
-import br.com.seven.lsi.view.TelaInventarioHerois;
 import br.com.seven.lsi.view.TelaMinhaConta;
 import br.com.seven.lsi.view.TelaModoOpcao;
 import br.com.seven.lsi.view.TelaPrepararBatalha;
@@ -288,10 +285,10 @@ public class SceneTelaPlayer extends Scene {
         });
         
         botaoTelaBatalha.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
-                initPreparaBatalha().show();
+                PlayerOnline.setPlayerTwo(null);
+                TelaPrepararBatalha.initPreparaBatalha();
             }
         });
         botaoModoGame.setOnAction(new EventHandler<ActionEvent>() {
@@ -332,24 +329,7 @@ public class SceneTelaPlayer extends Scene {
             Logger.getLogger(SceneTelaPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-    
-    private Stage initPreparaBatalha(){
-        try {
-            Stage stagePreparaBatalha = new Stage();
-            Parent parent = FXMLLoader.
-                    load(getClass().getResource("/layouts/prepara_batalha.fxml"));
-            Scene scene = new Scene(parent);
-            stagePreparaBatalha.setScene(scene);
-            stagePreparaBatalha.setTitle("Prepare-se para Batalha");
-            stagePreparaBatalha.setResizable(false);
-            TelaPrepararBatalha.setStage(stagePreparaBatalha);
-            return stagePreparaBatalha;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
+    }    
 
     public static Stage getStage() {
         return stage;

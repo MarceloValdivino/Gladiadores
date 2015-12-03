@@ -7,8 +7,10 @@
 import br.com.seven.lsi.facade.Facade;
 import br.com.seven.lsi.model.Habilidade;
 import br.com.seven.lsi.model.Personagem;
+import br.com.seven.lsi.model.Player;
 import br.com.seven.lsi.myenum.TipoPersonagem;
 import br.com.seven.lsi.view.TelaBatalha;
+import java.util.List;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

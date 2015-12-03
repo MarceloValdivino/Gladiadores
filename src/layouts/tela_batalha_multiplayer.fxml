@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.seven.lsi.view.TelaBatalhaMultiplayer">
+   <children>
+      <ImageView fx:id="imgPlayer" fitHeight="366.0" fitWidth="258.0" layoutX="14.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/demolidor.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnPoderUm" layoutX="29.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderUm" prefHeight="25.0" prefWidth="43.0" text="Q" />
+      <ProgressBar fx:id="pBarVidaPlayer" layoutX="14.0" layoutY="122.0" prefHeight="37.0" prefWidth="370.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderUm" layoutX="278.0" layoutY="221.0" prefHeight="18.0" prefWidth="104.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderDois" layoutX="278.0" layoutY="291.0" prefHeight="18.0" prefWidth="104.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderTres" layoutX="278.0" layoutY="361.0" prefHeight="18.0" prefWidth="104.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderQuatro" layoutX="278.0" layoutY="420.0" prefHeight="18.0" prefWidth="104.0" progress="0.0" />
+      <Label fx:id="lbNomeJogador" layoutX="13.0" layoutY="64.0" prefHeight="50.0" prefWidth="370.0" text="JOGADOR">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnPoderDois" layoutX="100.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderDois" prefHeight="25.0" prefWidth="43.0" text="W" />
+      <Button fx:id="btnPoderTres" layoutX="169.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderTres" prefHeight="25.0" prefWidth="43.0" text="E" />
+      <Button fx:id="btnPoderQuatro" layoutX="244.0" layoutY="477.0" mnemonicParsing="false" onAction="#usarPoderQuatro" prefHeight="25.0" prefWidth="43.0" text="R" />
+      <Label fx:id="lbTempoBatalha" alignment="CENTER" contentDisplay="CENTER" layoutX="334.0" layoutY="10.0" prefHeight="108.0" prefWidth="133.0" text="00" textAlignment="CENTER" textOverrun="CLIP">
+         <font>
+            <Font size="66.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbPoderUmBotao" alignment="CENTER" layoutX="24.0" layoutY="451.0" text="Poder Um" />
+      <Label fx:id="llbPoderDoisBotao" alignment="CENTER" layoutX="93.0" layoutY="451.0" text="Poder Dois" />
+      <Label fx:id="lbPoderTresBotao" alignment="CENTER" layoutX="162.0" layoutY="451.0" text="Poder Três" />
+      <Label fx:id="lbPoderQuatroBotao" alignment="CENTER" layoutX="230.0" layoutY="451.0" text="Poder Quatro" />
+      <Label fx:id="lbPriHabilidadeBar" layoutX="279.0" layoutY="187.0" text="Primeira Habilidade">
+         <font>
+            <Font />
+         </font></Label>
+      <Label fx:id="lbSegHabilidadeBar" layoutX="277.0" layoutY="255.0" text="Segunda Habilidade" />
+      <Label fx:id="lbTerHabilidadeBar" layoutX="279.0" layoutY="326.0" text="Terceira Habilidade" />
+      <Label fx:id="lbQuarHabilidadeBar" layoutX="282.0" layoutY="391.0" text="Quarta Habilidade" />
+      <ImageView fx:id="imgComputer" fitHeight="258.0" fitWidth="304.0" layoutX="527.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/lukeCage.jpg" />
+         </image>
+      </ImageView>
+      <ProgressBar fx:id="pBarVidaComputador" layoutX="416.0" layoutY="122.0" prefHeight="37.0" prefWidth="370.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderUmComp" layoutX="419.0" layoutY="221.0" prefHeight="18.0" prefWidth="104.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderDoisComp" layoutX="418.0" layoutY="291.0" prefHeight="18.0" prefWidth="104.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderTerComp" layoutX="419.0" layoutY="361.0" prefHeight="18.0" prefWidth="102.0" progress="0.0" />
+      <ProgressBar fx:id="pBarPoderQuatComp" layoutX="417.0" layoutY="420.0" prefHeight="18.0" prefWidth="102.0" progress="0.0" />
+      <Label fx:id="lbNomeComputador" alignment="CENTER_RIGHT" layoutX="415.0" layoutY="64.0" prefHeight="50.0" prefWidth="370.0" text="COMPUTADOR">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbPriHabilidadeCompBar" layoutX="418.0" layoutY="187.0" text="Primeira Habilidade" />
+      <Label fx:id="lbSegHabilidadeCompBar" layoutX="418.0" layoutY="255.0" text="Segunda Habilidade" />
+      <Label fx:id="lbTercHabilidadeCompBar" layoutX="417.0" layoutY="326.0" text="Terceira Habilidade" />
+      <Label fx:id="lbQuartHabilidadeCompBar" layoutX="420.0" layoutY="391.0" text="Quarta Habilidade" />
+      <Button fx:id="btnItemUm" layoutX="29.0" layoutY="539.0" mnemonicParsing="false" onAction="#usarItemUm" prefHeight="25.0" prefWidth="43.0" text="1" />
+      <Button fx:id="btnItemDois" layoutX="100.0" layoutY="539.0" mnemonicParsing="false" onAction="#usarItemDois" prefHeight="25.0" prefWidth="43.0" text="2" />
+      <Button fx:id="btnItemTres" layoutX="169.0" layoutY="539.0" mnemonicParsing="false" onAction="#usarItemTres" prefHeight="25.0" prefWidth="43.0" text="3" />
+      <Button fx:id="btnItemQuatro" layoutX="245.0" layoutY="539.0" mnemonicParsing="false" onAction="#usarItemQuatro" prefHeight="25.0" prefWidth="43.0" text="4" />
+      <Label layoutX="28.0" layoutY="514.0" text="Item Um" />
+      <Label layoutX="96.0" layoutY="514.0" text="Item Dois" />
+      <Label layoutX="166.0" layoutY="514.0" text="Item Três" />
+      <Label layoutX="233.0" layoutY="514.0" text="Item Quatro" />
+      <Button fx:id="btnItemDois1" layoutX="577.0" layoutY="546.0" mnemonicParsing="false" onAction="#usarItemDois" prefHeight="25.0" prefWidth="43.0" text="8" />
+      <Label fx:id="llbPoderDoisBotao1" alignment="CENTER" layoutX="570.0" layoutY="458.0" text="Poder Dois" />
+      <Button fx:id="btnItemUm1" layoutX="506.0" layoutY="546.0" mnemonicParsing="false" onAction="#usarItemUm" prefHeight="25.0" prefWidth="43.0" text="7" />
+      <Button fx:id="btnPoderDoisPlayerTwo" layoutX="577.0" layoutY="484.0" mnemonicParsing="false" onAction="#usarPoderDois" prefHeight="25.0" prefWidth="43.0" text="I" />
+      <Label fx:id="lbPoderQuatroBotao1" alignment="CENTER" layoutX="707.0" layoutY="458.0" text="Poder Quatro" />
+      <Label fx:id="lbPoderUmBotao1" alignment="CENTER" layoutX="501.0" layoutY="458.0" text="Poder Um" />
+      <Button fx:id="btnItemTres1" layoutX="646.0" layoutY="546.0" mnemonicParsing="false" onAction="#usarItemTres" prefHeight="25.0" prefWidth="43.0" text="9" />
+      <Label fx:id="lbPoderTresBotao1" alignment="CENTER" layoutX="639.0" layoutY="458.0" text="Poder Três" />
+      <Label layoutX="573.0" layoutY="521.0" text="Item Dois" />
+      <Button fx:id="btnItemQuatro1" layoutX="722.0" layoutY="546.0" mnemonicParsing="false" onAction="#usarItemQuatro" prefHeight="25.0" prefWidth="43.0" text="0" />
+      <Button fx:id="btnPoderTresPlayerTwo" layoutX="646.0" layoutY="484.0" mnemonicParsing="false" onAction="#usarPoderTres" prefHeight="25.0" prefWidth="43.0" text="O" />
+      <Label layoutX="710.0" layoutY="521.0" text="Item Quatro" />
+      <Label layoutX="643.0" layoutY="521.0" text="Item Três" />
+      <Button fx:id="btnPoderQuatroPlayerTwo" layoutX="721.0" layoutY="484.0" mnemonicParsing="false" onAction="#usarPoderQuatro" prefHeight="25.0" prefWidth="43.0" text="P" />
+      <Label layoutX="505.0" layoutY="521.0" text="Item Um" />
+      <Button fx:id="btnPoderUmPlayerTwo" layoutX="506.0" layoutY="484.0" mnemonicParsing="false" onAction="#usarPoderUm" prefHeight="25.0" prefWidth="43.0" text="U" />
+   </children>
+</AnchorPane>

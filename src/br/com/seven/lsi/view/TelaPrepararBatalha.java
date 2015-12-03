@@ -14,6 +14,8 @@ import br.com.seven.lsi.singletone.PlayerOnline;
 import br.com.seven.lsi.util.AlertUtil;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,6 +45,9 @@ public class TelaPrepararBatalha implements Initializable {
     private ListView<PersonagensProperty> listaHeriosPlayer;
 
     @FXML
+    private Label lbPersonagemDois;
+
+    @FXML
     private Button botaoBatalha;
 
     @FXML
@@ -70,10 +75,18 @@ public class TelaPrepararBatalha implements Initializable {
             boolean choice = AlertUtil.confirmationAlert("Batalha", personagemPlayer.getNome() + " VS " + personagemComputador.getNome(), "Deseja mesmo iniciar a batalha?");
             if (choice) {
                 stage.close();
-                TelaBatalha.setPersonagemComputador(personagemComputador);
-                TelaBatalha.setPersonagemPlayer(personagemPlayer);
-                TelaBatalha.setRound(1);
-                TelaBatalha.initTelaBatalha();
+                if (PlayerOnline.getPlayerTwo() != null) {
+                    TelaBatalhaMultiplayer.setPersonagemComputador(personagemComputador);
+                    TelaBatalhaMultiplayer.setPersonagemPlayer(personagemPlayer);
+                    TelaBatalhaMultiplayer.setRound(1);
+                    TelaBatalhaMultiplayer.initTelaBatalhaMultiplayer();
+                } else {
+                    TelaBatalha.setPersonagemComputador(personagemComputador);
+                    TelaBatalha.setPersonagemPlayer(personagemPlayer);
+                    TelaBatalha.setRound(1);
+                    TelaBatalha.initTelaBatalha();
+                }
+
             }
         } else {
             AlertUtil.genericAlert("Seleção", "Escolha de Personagens", "Selecione um personagem para você e um personagem para o computador.", Alert.AlertType.WARNING);
@@ -87,8 +100,19 @@ public class TelaPrepararBatalha implements Initializable {
         player = PlayerOnline.getPlayer();
         player = facade.buscarPlayer(player.getId());
 
+        List<Personagem> listaDeAdversarios;
+        if (PlayerOnline.getPlayerTwo() != null) {
+            lbPersonagemDois.setText(PlayerOnline.getPlayerTwo().getNome());
+            listaDeAdversarios = new ArrayList<>();
+            for (MeuPersonagem personagem : PlayerOnline.getPlayerTwo().getMeusPersonagens()) {
+                listaDeAdversarios.add(personagem.getPersonagem());
+            }
+        } else {
+            listaDeAdversarios = facade.listarPersonagem();
+        }
         playerName.setText(PlayerOnline.getPlayer().getNome());
-        for (Personagem p : facade.listarPersonagem()) {
+
+        for (Personagem p : listaDeAdversarios) {
             obsListaCompHerois.add(new PersonagensProperty(p.getId(), p.getNome()));
         }
         for (MeuPersonagem mp : player.getMeusPersonagens()) {
@@ -146,5 +170,21 @@ public class TelaPrepararBatalha implements Initializable {
 
     public static void setStage(Stage stage) {
         TelaPrepararBatalha.stage = stage;
+    }
+
+    public static void initPreparaBatalha() {
+        try {
+            Stage stagePreparaBatalha = new Stage();
+            Parent parent = FXMLLoader.
+                    load(TelaPrepararBatalha.class.getResource("/layouts/prepara_batalha.fxml"));
+            Scene scene = new Scene(parent);
+            stagePreparaBatalha.setScene(scene);
+            stagePreparaBatalha.setTitle("Prepare-se para Batalha");
+            stagePreparaBatalha.setResizable(false);
+            TelaPrepararBatalha.setStage(stagePreparaBatalha);
+            TelaPrepararBatalha.stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
